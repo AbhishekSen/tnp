@@ -1,0 +1,54 @@
+<%@ include file="../utils/session_validator.jsp"%>
+<%
+	String sid = null; 
+	sid = request.getSession(false).getId() ;
+
+	if (session_validate(sid,db).equals("true") ) 
+	{
+
+		response.sendRedirect("../logout.jsp");
+		return;
+	}
+				
+%>
+
+
+
+<%
+
+                db.fetchConfigDetails(); //newly added
+		String username="";
+		String name="";
+		String student_roll_number="";
+		String student_id="";
+		String sql_username_validate="select username from session where session_id = '"+sid+"';" ;
+
+		db.connect();
+		ResultSet rst= db.execSQL(sql_username_validate);
+		if(rst.next()) 
+		{
+		        username = rst.getString(1);
+
+		}
+		rst.close();
+
+                if(username == null || username == "")
+                {  
+
+                        response.sendRedirect("../logout.jsp");
+                        return;
+                }
+             
+		String sql_stud_name = "select student_name,student_roll_number,student_id from student_record where username='"+username+"';";
+                rst= db.execSQL(sql_stud_name);
+		if(rst.next()) 
+		{
+		        name = rst.getString(1);
+		        student_roll_number = rst.getString(2);
+                        student_id = rst.getString(3);
+		}
+		rst.close();
+		db.close();
+	
+%>
+

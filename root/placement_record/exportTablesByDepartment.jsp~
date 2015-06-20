@@ -1,0 +1,247 @@
+<%@ page contentType="text/html; charset=iso-8859-1" language="java" import="java.sql.*" errorPage="" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript">
+
+</script>
+</head>
+<%@page language="java" import="pack.DbBean,java.text.SimpleDateFormat"%> 
+<%@ page language="java" import="java.util.*,java.util.Properties" %>
+
+<jsp:useBean id="db" class="pack.DbBean" scope="session" />
+<%@ include file="../utils/session_validator.jsp"%>
+<%
+	String sid = null; 
+	sid = request.getSession(false).getId() ;
+	if (session_validate(sid,db).equals("true") ) 
+		response.sendRedirect("../../logout.jsp");	
+
+      String strPropPath="/opt/IITG-PROJECT/SW-IIT/placement_new/placement.properties";
+      Properties ps=new Properties();
+      ps.load(new FileInputStream(strPropPath));
+      String gpath=ps.getProperty("gpath").trim();
+      String apath=ps.getProperty("apath").trim();	
+%>
+
+<%@page language="java" import="java.util.*,gcom.*,java.lang.*,java.util.*,java.io.*" %>
+<%  	
+
+	 ServletOutputStream opt =null;
+         String path = gpath+"placement_uploads/status/";
+         FileWriter writer = null;
+	 java.util.Date date = null;
+    String submit = null;
+    ResultSet rs;
+	 SimpleDateFormat formatter = null;
+	ResultSet srs;
+	 String fName="";
+	 String timestamp = "";
+    String tempPackage = null;
+    String tempPackageName = null;
+    String tempDepartment=null;
+    String Content = "";
+    String department_name="";
+    String programme_name="";
+
+	 String programme_name_input = request.getParameter("programme_name");
+    String programme_id="";
+    String department_id="";
+    String ctcField="";
+    String ctcCur="";
+    String student_id="";
+	String rollNo="";
+	String name="";
+	String email="";
+	String emailAlternative="";
+    ResultSet det;
+	ResultSet drs;	
+    String ctc_query="";
+	String fetch_department_query="";
+	String agency_id=null;
+	String agency_profile=null;
+        String package_name=null;
+	String package_id="";
+        String tempDepartmentId=null;
+	String tempProgrammeId=null;
+	String fetch_student_query=null;
+	String fetch_query="";
+	String FileName="AllStudents";
+	String agency_name=null;
+	 if(programme_name_input != null)
+	 {
+	        date = new java.util.Date();
+		formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		timestamp = formatter.format(date);
+	        fName=FileName.replaceAll(" ","_");
+	        fName=fName.replaceAll("/","-");
+		//change here**************
+		String filename=path+fName+".csv";
+		 writer = new FileWriter(filename);
+		int columnCount = 4; //number of attributes in fetch_student_query
+       		ResultSet studentrs,temp;
+                db.connect();
+		studentrs= db.execSQL("select student_id from student_record where job_status=1;"); 
+			Content+="Roll Number,";
+				Content+="Name,";
+				Content+="Email,";
+				Content+="Email Alternative,";
+				Content+="Package Name,";
+				Content+="CTC Offered,";
+				Content+="Company Sector";	
+		                Content+="\n";
+				writer.append(Content);
+	       	while(studentrs.next())
+		{
+			  //Content = "";
+		       	student_id = studentrs.getString(1);
+
+			temp=db.execSQL("select package_id from placement_record where student_id='"+student_id+"';");
+;
+			while(temp.next())
+			{
+				Content="";
+				package_id=temp.getString(1);
+	
+				fetch_student_query = "select student_roll_number, student_name, email, email_alternative from student_record where student_id='"+student_id+"';";
+				rs= db.execSQL(fetch_student_query);
+		
+				//System.out.println(student_id);
+		fetch_department_query = "select department_id, programme_id from student_record where student_id='"+student_id+"';";
+				drs= db.execSQL(fetch_department_query);
+				drs.next();
+				department_id = drs.getString(1);
+				programme_id = drs.getString(2);
+
+				drs.close();
+		fetch_query = "select package_name from package_details where package_id='"+package_id+"';";
+				srs= db.execSQL(fetch_query);
+				srs.next();
+				package_name=srs.getString(1);
+				srs.close();
+				try
+				 {
+		
+
+
+					if(rs.next()) 
+					{
+						//System.out.println("Inside if");
+						if(programme_id.equals("1") || programme_id.equals("2"))
+						{
+							ctcField="ctc";
+						}
+						else if(programme_id.equals("3") || programme_id.equals("4"))
+						{
+							ctcField="ctc_mtech";
+						}
+						else if(programme_id.equals("5"))
+						{
+							ctcField="ctc_msc";
+						}
+						else if(programme_id.equals("7"))
+						{
+							ctcField="ctc_phd";
+						}
+						//System.out.println("ctcfield : "+ctcField);
+						ctc_query="select "+ctcField+" from package_details where package_name='"+package_name+"';";
+			
+						det = db.execSQL(ctc_query);
+						//System.out.println("Printing");
+						if(det.next())
+							ctcCur = det.getString(1);
+						det.close();
+			
+						det = db.execSQL("select agency_id from package_details where package_name='"+package_name+"';");
+						if(det.next())
+							agency_id = det.getString(1);
+							//out.println(agency_id);
+						det.close();
+			
+						det = db.execSQL("select agency_profile,agency_name from agency where agency_id='"+agency_id+"';");
+						if(det.next())
+							agency_profile = det.getString(1);
+							agency_name= det.getString(2);
+							//out.println(agency_profile);
+						det.close();
+					
+						for (int i=1; i<=4; i++) 
+						{
+							Content+=rs.getString(i);
+							Content+=",";
+								
+						}
+						Content+=package_name;
+						Content+=",";
+						Content+=agency_name;
+						Content+=",";
+						Content+=ctcCur;
+						Content+=",";
+						Content+=agency_profile;
+						Content+="\n";
+					}
+			
+			  	  }
+				catch (Exception e) 
+			        {
+		                        e.printStackTrace();
+			        }
+			       
+			        writer.append(Content);
+				
+			
+
+				rs.close();
+			}
+			temp.close();
+
+
+				  
+		}
+		studentrs.close();
+		writer.close();		
+		db.close();
+
+ 		try
+	        {
+                Process p = Runtime.getRuntime().exec(gpath+"placement_new/root/placement_record/statusZipDep.sh");
+                String s=null;
+		
+                BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+						while ((s = stdInput.readLine()) != null) 
+						{
+						System.out.println(s);
+						}
+	        File myfile = new File(path+"AllStudent_Status.zip");
+		BufferedInputStream bufin=null;
+		ServletOutputStream myOut=null;
+		myOut = response.getOutputStream();
+		//set response headers
+		response.setContentType("application/pdf");
+		
+		response.addHeader("Content-Disposition","attachment; filename="+"AllStudent_Status.zip" );
+		
+		response.setContentLength( (int) myfile.length( ) );
+		
+		FileInputStream input = new FileInputStream(myfile);
+		bufin = new BufferedInputStream(input);
+		int readBytes = 0;
+		
+		//read from the file; write to the ServletOutputStream
+		while((readBytes = bufin.read( )) != -1)
+		myOut.write(readBytes);
+
+		//close the input/output streams
+		if (myOut != null)
+		myOut.close( );
+		if (bufin != null)
+		bufin.close( );
+	        }
+	        catch(Exception e)
+	        {
+		        e.printStackTrace();
+	        }
+ 
+	 }
+	 		
+%>

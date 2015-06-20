@@ -1,0 +1,8 @@
+
+
+
+<p><label>Start Date : </label><input type="text" id="start_dt" name="start_dt" class="center"/>
+&nbsp;
+<a href="javascript:NewCal('start_dt','yyyymmmdd')" ><img class="cal" alt="Pick a date"src="../../images/cal.gif"/></a></p>
+
+

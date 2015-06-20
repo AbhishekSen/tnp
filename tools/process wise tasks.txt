@@ -1,0 +1,71 @@
+departure / admission 
+add / delete  / modify(rename a program ) program 
+depatrment offerings , add / delete
+
+department-modify,add,delete
+curriculum,
+-modify,add ,delete
+,
+grade_type0--.modify,add,delete.
+
+
+::: course curriculum :::
+
+dep , prog , prop .sem  (u will enter their name )
+old course curriculum is displayed .
+i.e course number , start date and end date 
+the fields are editable  .
+we also have the option of adding a new row  .
+add a new row . 
+if old curriculum is not found .
+just display an empty row and ask the user to input the details 
+he has the option of adding a new row .
+
+there are 2 buttons 
+1. add a course  .
+2. add an elective course .
+
+ 
+
+1 submit button .
+
+
+::::: change syllab , l ,t , p  :::  
+::::::::: introduce a new course  :::
+
+
+:::::: course offerings ::::
+add / delete . 
+any course present in course record can be entered  here . 
+
+input ::
+course number
+department who would be offering it (drop down is there )
+year / semester .
+
+
+::::::: course teacher assignment :::::
+add / delete 
+input ::
+course number 
+year/ semester  
+and we are assuming teacher is alloted after course is offered .  
+so depenfing on course number and department , we can provide a drop down for  
+faculty name . 
+beside this there would be button , add more faculty for this course  . 
+and the submit .
+
+:::::student admission / departure . :::
+::::: 
+
+::::::  he can register   ::::;
+:::::  drop a course / add acourse at later stage :::
+
+
+
+::::::; faculty :: they can give grades course wise / change grade student wise . :::::
+:::::  requset for a sem wise grade card preparati0on :::
+::::: requset for cpi :::::::
+
+
+:::: allotment of student strength . for a branch , program and year ()::::year of adnmission

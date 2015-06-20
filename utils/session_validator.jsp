@@ -1,0 +1,47 @@
+
+<%@page language="java" import="java.lang.*"%>
+<%!
+public String session_validate(String sid,pack.DbBean db)
+{
+	try { 
+	
+	
+	String logout = "false" ;		
+	String sql_session_validate = "select session_id,username from session where session_id='"+sid+"'  " ;
+	db.connect();	
+	String username="";
+	ResultSet rs=db.execSQL(sql_session_validate);
+	int num_rows_session = 0; 
+	if (rs.next())
+	{
+		//num_rows_session=1;
+		username=rs.getString("username");
+	}
+	rs.close() ;
+	ResultSet re=db.execSQL("select count(*) from prlogin where userid='"+username+"' ;");
+	if(re.next())
+		num_rows_session=re.getInt(1);
+	re.close();
+	db.close() ;
+	if (num_rows_session != 1 )
+		logout = "true" ; 
+        logout = "false";
+	return logout; 
+  	}	
+	catch(SQLException e) 
+	{ 
+		String err=("<B>Error</B>");
+		err+="<BR>";
+		err+=e.toString();
+		return err;
+		//throw new ServletException("Your query is not working: " + str , e); 
+	} 
+	catch (Exception e) 
+	{
+		String err=("<B>Error</B>");
+		err+="<BR>";
+		err+=e.toString();
+		return err;
+	}				
+}
+%>

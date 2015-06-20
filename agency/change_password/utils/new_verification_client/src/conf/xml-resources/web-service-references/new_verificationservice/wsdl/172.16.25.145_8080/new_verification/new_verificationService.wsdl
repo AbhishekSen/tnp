@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://pack_verify/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://pack_verify/" name="new_verificationService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://pack_verify/" schemaLocation="http://automation:8080/new_verification/new_verificationService/__container$publishing$subctx/WEB-INF/wsdl/NewVerificationService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="verify">
+    <part name="parameters" element="tns:verify"/>
+  </message>
+  <message name="verifyResponse">
+    <part name="parameters" element="tns:verifyResponse"/>
+  </message>
+  <portType name="new_verification">
+    <operation name="verify">
+      <input message="tns:verify"/>
+      <output message="tns:verifyResponse"/>
+    </operation>
+  </portType>
+  <binding name="new_verificationPortBinding" type="tns:new_verification">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="verify">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="new_verificationService">
+    <port name="new_verificationPort" binding="tns:new_verificationPortBinding">
+      <soap:address location="http://automation:8080/new_verification/new_verificationService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>

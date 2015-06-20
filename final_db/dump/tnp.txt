@@ -1,0 +1,179 @@
+/*
+SQLyog Community Edition- MySQL GUI v5.20
+Host - 5.0.24-community-nt : Database - training_and_placement
+*********************************************************************
+Server version : 5.0.24-community-nt
+*/
+
+SET NAMES utf8;
+
+SET SQL_MODE='';
+
+create database if not exists `training_and_placement`;
+
+USE `training_and_placement`;
+
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
+
+/*Table structure for table `agency` */
+
+DROP TABLE IF EXISTS `agency`;
+
+CREATE TABLE `agency` (
+  `agency_id` int(11) NOT NULL auto_increment,
+  `agency_name` varchar(100) default NULL,
+  `agency_website` varchar(100) default NULL,
+  `agency_profile` varchar(1000) default NULL,
+  `job_designation` varchar(500) default NULL,
+  `job_description` varchar(1000) default NULL,
+  `location_of_posting` varchar(200) default NULL,
+  `accomodation` int(1) default NULL,
+  `bond` int(1) default NULL,
+  `bond_duration` int(3) default NULL,
+  `preferred_date_1` date default NULL,
+  `preferred_date_2` date default NULL,
+  `no_of_executive` int(2) default NULL,
+  `shortlist` int(1) default NULL,
+  `cpi` float default NULL,
+  `ppt` int(1) default NULL,
+  `aptitude_test` int(1) default NULL,
+  `aptitude_duration` float default NULL,
+  `gd` int(1) default NULL,
+  `interview` int(1) default NULL,
+  `no_of_rounds` int(2) default NULL,
+  `no_of_rooms` int(2) default NULL,
+  `immediate_result_declaration` int(1) default NULL,
+  `date_of_result` date default NULL,
+  `joining_date` date default NULL,
+  `agency_person` varchar(100) default NULL,
+  `agency_email` varchar(200) default NULL,
+  `agency_address` varchar(1000) default NULL,
+  `agency_phone` varchar(50) default NULL,
+  `agency_fax` varchar(50) default NULL,
+  `agency_year` int(4) default NULL,
+  `agency_mobile` varchar(15) default NULL,
+  `final_agency_date` date default NULL,
+  PRIMARY KEY  (`agency_id`),
+  UNIQUE KEY `agency_id` (`agency_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC COMMENT='InnoDB free: 10240 kB';
+
+/*Data for the table `agency` */
+
+insert  into `agency`(`agency_id`,`agency_name`,`agency_website`,`agency_profile`,`job_designation`,`job_description`,`location_of_posting`,`accomodation`,`bond`,`bond_duration`,`preferred_date_1`,`preferred_date_2`,`no_of_executive`,`shortlist`,`cpi`,`ppt`,`aptitude_test`,`aptitude_duration`,`gd`,`interview`,`no_of_rounds`,`no_of_rooms`,`immediate_result_declaration`,`date_of_result`,`joining_date`,`agency_person`,`agency_email`,`agency_address`,`agency_phone`,`agency_fax`,`agency_year`,`agency_mobile`,`final_agency_date`) values (1,'microsoft',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'tcs',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'google',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2007,NULL,'2007-05-09'),(4,'schlum',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2004,NULL,NULL),(5,'hero','dlghk','trurtu','rtutr','rturtu','tur',1,1,43,'2007-05-24','2007-05-25',4,0,6.9,1,1,3,1,1,34,34,1,'2007-05-24','2007-05-09','eeutr','kjthde@','hry','6423','45634',2005,'346',NULL),(6,'ryr','ey','yutrurt','trrtrjgf','ttrurt','tuttty',1,1,2,'2007-05-17','2007-05-23',7,0,6,1,1,3,0,0,5,7,0,'2007-05-29','2007-05-22','turtu','gfhdf@','eyry','45454','45345',2006,'354',NULL),(7,'ryer','turtttsw','trurt','trur','rutrt6','ru6r6u',1,1,4,'2007-05-18','2007-05-25',4,0,6.5,1,1,3,0,0,6,4,0,'2007-05-30','2007-05-31','trtutr','hjjfgthyzde@','gfhdtj','56745','475',2007,'3464',NULL),(8,'main','koi','aisa','gaaon','geet','ki',1,1,5,'2007-05-24','2007-05-23',5,0,6.01,1,1,45,1,0,45,5,1,'2007-05-25','2007-05-24','gfjsd','fgjgj@','gjsdfg','5674','4574',2007,'45745',NULL),(9,'elygk','ryl;','trurtu','tutru','turtu','tyuity',1,1,7,'2007-05-10','2007-05-25',56,1,5.99,1,1,6,1,1,4,56,1,'2007-05-24','2007-05-25','dhutu','wehiweklh@','ryl;i','346','346',2007,'43634',NULL),(10,'dgj','sdkg','dfh','dfhf','dfhdf','gfhj',1,1,45,'2007-05-25','2007-05-17',2,1,6,1,1,35,1,1,3,5,1,'2007-05-25','2007-05-24','fttst','gktdtjry@','tyutrrrrrrr','456346','345346',2007,'45346',NULL);
+
+/*Table structure for table `department` */
+
+DROP TABLE IF EXISTS `department`;
+
+CREATE TABLE `department` (
+  `agency_id` int(11) default NULL,
+  `department_id` int(2) default NULL,
+  `no_of_vacancies` int(3) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `department` */
+
+insert  into `department`(`agency_id`,`department_id`,`no_of_vacancies`) values (5,99,4),(6,99,76),(7,99,23),(9,99,5),(10,99,3);
+
+/*Table structure for table `equipments` */
+
+DROP TABLE IF EXISTS `equipments`;
+
+CREATE TABLE `equipments` (
+  `agency_id` int(11) default NULL,
+  `lcd` int(1) default NULL,
+  `laptop` int(1) default NULL,
+  `ohp` int(1) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `equipments` */
+
+insert  into `equipments`(`agency_id`,`lcd`,`laptop`,`ohp`) values (5,1,0,1),(6,0,1,1),(7,1,1,0),(9,1,0,0),(10,0,0,1);
+
+/*Table structure for table `login` */
+
+DROP TABLE IF EXISTS `login`;
+
+CREATE TABLE `login` (
+  `username` varchar(100) default NULL,
+  `password` varchar(100) default NULL,
+  `role_id` int(10) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `login` */
+
+insert  into `login`(`username`,`password`,`role_id`) values ('student','student',1),('administrator','administrator',4);
+
+/*Table structure for table `placement_record` */
+
+DROP TABLE IF EXISTS `placement_record`;
+
+CREATE TABLE `placement_record` (
+  `agency_id` int(11) default NULL,
+  `student_id` int(11) default NULL,
+  `location_of_posting` varchar(200) default NULL,
+  `basic` double default NULL,
+  `hra` double default NULL,
+  `others` double default NULL,
+  `gross` double default NULL,
+  `take_home` double default NULL,
+  `ctc` double default NULL,
+  `remarks` varchar(1000) default NULL,
+  `confirmation` int(1) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `placement_record` */
+
+insert  into `placement_record`(`agency_id`,`student_id`,`location_of_posting`,`basic`,`hra`,`others`,`gross`,`take_home`,`ctc`,`remarks`,`confirmation`) values (4,5,'lok',463,346,67,457,457,756,'gfjh',0),(4,5,'gfl,kj',35870,38957,574,457,457,7876,'hfgflg.kj;',0),(4,5,'gfl,kj',35870,38957,574,457,457,7876,'hfgflg.kj;',0),(3,45,'egtrt',35870,25,56,456,235222,22222235,'wetre',1),(2,2,'786',4365,345,3454,5,565,56877,'htiyhuyt',1),(1,2,'gfjgf',6346,43656,2524,3532,32523,5,'ryrey',1),(1,4,'egtrt',35870,324,2524,3532,235222,325,'yuyiti',1),(3,3,'gfl,kj',1237,324,25,235,235222,325,'jyh',1),(2,1,NULL,NULL,NULL,NULL,NULL,NULL,800,NULL,NULL),(4,4,'gjf',4335,123,12123,235,346,345,'fhdt',1),(4,4,'gjf',4335,123,12123,235,346,345,'fhdt',1),(4,3,'45',364,433,4337634,45363,57,576,'gfj',0),(1,7,'68',12,346,145,3462,121,121,'dfd',1);
+
+/*Table structure for table `program_package` */
+
+DROP TABLE IF EXISTS `program_package`;
+
+CREATE TABLE `program_package` (
+  `agency_id` int(11) default NULL,
+  `program_id` int(2) default NULL,
+  `basic` double default NULL,
+  `hra` double default NULL,
+  `others` double default NULL,
+  `gross` double default NULL,
+  `take_home` double default NULL,
+  `ctc` double default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `program_package` */
+
+insert  into `program_package`(`agency_id`,`program_id`,`basic`,`hra`,`others`,`gross`,`take_home`,`ctc`) values (3,1,NULL,NULL,NULL,NULL,NULL,961);
+
+/*Table structure for table `session` */
+
+DROP TABLE IF EXISTS `session`;
+
+CREATE TABLE `session` (
+  `username` varchar(100) default NULL,
+  `session_id` varchar(100) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `session` */
+
+insert  into `session`(`username`,`session_id`) values ('student','b9755631560ca4ffffffffa247e6e97e935b7'),('administrator','b978f8019372465334fb03dcf802f'),('student','b979ce518c149674da2371d69f867'),('administrator','b97a3d66514b68a908d8e91f59b'),('administrator','b9999e297b8a369c36b3aaebbc0f'),('administrator','b9d20581d3a72917e538f2c39e599'),('administrator','b9d9919181aa48ffffffffd86f719da40f291'),('administrator','6f449261bfbe41ffffffffaf9795633554e29'),('administrator','71cbca414a08e6ffffffffad0be8c1f401c62'),('administrator','746042815164327cc1568bba66b10'),('administrator','76933af558f7256f55616ff9af53'),('administrator','74bfcf11588db64a30ab6269104cb'),('administrator','79b1b4a18f058b6ffafe8fb6ab81'),('administrator','79d34b119c47d512a5ec31fc3cf31c'),('administrator','7a1d1051bb7179adfdef333e9b846'),('administrator','7a24c2e2ee6eac41e608a641e670'),('administrator','8041dff1f313f442b85dcf981acc4'),('administrator','83d147d199d0ff4a4b6bfd863cca8'),('administrator','8a0c112154052a12220fd2397fd1c3'),('administrator','8a37c9e13c7b4210bf57b7a25d5971'),('administrator','93f9b501a3d3335a3732af489c9b7'),('administrator','983a15e1c91337119c01c38aa7d4'),('administrator','984366616aab446c942a97e3d9411'),('administrator','986ce7a1370ff2ce9b9214cf23ab5'),('administrator','987b60a1bb9061c91fe30a846ba66'),('administrator','9952d1b12a30a5b2d0f4bebff7e38'),('administrator','997b0304014ee8076756d1a5ae9a'),('administrator','998b0b1d4c855e024b616693f8e6'),('administrator','9e2b82aece7fcdd31518fb1d8e65'),('administrator','9e2cc8b36b5f9b991ed4b2536de9'),('administrator','9e3308657e8d2ef138a76e68a460'),('administrator','9e50e269d92adf3317ba6f2bb1bc'),('administrator','9e8504017dbeafc74cfb63631a845'),('administrator','9ea6fb41e4d6ef7d36370561ab68e'),('administrator','9eca5d9aaf3d2129365cad696813b'),('administrator','9fd7e1a7359f711d6574b9262a5a6'),('administrator','a0415e862e8c81214c0c56bc6be09'),('administrator','a0631a91638680609dcb539b52a6e'),('administrator','b4c568f16564b8c5e1fc40216edd2'),('administrator','b4c94e0d7a8bb9feed3617feb4b6'),('administrator','b4c95141c114f262fdf1884a820e2'),('administrator','b4cc50610245424d041cbc4608df7'),('administrator','d43af33ad662cc352eb9d9070ebd'),('administrator','e6904e311c537f35e7d465e3b2781'),('administrator','e85a696a28dc6d6242e1db306c61'),('administrator','eb00a32188af79b4dbbb36b8ed08f'),('administrator','eb398906d73afd750ba592406dc5'),('administrator','ee0e1848b9eb8f683795557607'),('administrator','efc91cf42ef837161da7b82e121e'),('administrator','efeb522132ea44595bf442bafcd47'),('administrator','f04b7e6a4d52b6b698a4a399f308'),('administrator','f0f3a8131feed111d199e7c30e8f9'),('administrator','f1d0cba17b043b5e5aba90328fc37'),('administrator','f26755825f055107b726271aeba19'),('administrator','f2a5c24fcf9f911458dd80720fc52'),('administrator','f2bfdc910bff0be4ceb829b48d614'),('administrator','f2f9d851da692f42cdd10a19c747c'),('administrator','f5d2456e29127d4be3deb8d63afb'),('administrator','f5fd0011e919f5e7e86bb61acbcc5'),('administrator','f67ec118aa29e746e035211c35ef'),('administrator','f756c3f1a52c90302783267c7ee4d'),('administrator','fb008361b7458a5956207f45bb3c9'),('administrator','fe25a8c1fb432ed874c1c58161eae'),('administrator','fe8d475a10fbf12472b2245dfe9de'),('administrator','fec3721935352535dd8741b1bf59'),('administrator','ffe22971d6075d105cbe2fcdec9505'),('administrator','54b3217527fc745d8c24901b31f'),('administrator','b748dca5717412836a0f1cd2fb00'),('administrator','12a314e1e20e081206444b638a5d91');
+
+/*Table structure for table `student` */
+
+DROP TABLE IF EXISTS `student`;
+
+CREATE TABLE `student` (
+  `student_id` int(11) NOT NULL auto_increment,
+  `student_roll_number` varchar(11) default NULL,
+  `final_agency_id` int(11) default NULL,
+  `student_year` int(4) default NULL,
+  PRIMARY KEY  (`student_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `student` */
+
+insert  into `student`(`student_id`,`student_roll_number`,`final_agency_id`,`student_year`) values (1,'05010116',NULL,NULL),(2,'05010111',NULL,NULL),(3,'05010112',NULL,NULL),(4,'05010113',NULL,NULL),(5,'05010114',NULL,NULL),(6,'05010119',NULL,2007),(7,'05010110',NULL,2007);
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+<system systemId="http://172.16.25.145:8080/dropDepartmentWS/drop_departmentService?WSDL" uri="src/conf/xml-resources/web-service-references/drop_departmentService/wsdl/172.16.25.145_8080/dropDepartmentWS/drop_departmentService.wsdl"/>
+<system systemId="http://automation:8080/dropDepartmentWS/drop_departmentService/__container$publishing$subctx/WEB-INF/wsdl/DropDepartmentService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/drop_departmentService/wsdl/automation_8080/dropDepartmentWS/drop_departmentService/__container_publishing_subctx/WEB-INF/wsdl/DropDepartmentService_schema1.xsd"/>
+</catalog>

@@ -1,0 +1,1 @@
+userName:rootpassword:passwordhost:localhost:3306database:new_academic_section

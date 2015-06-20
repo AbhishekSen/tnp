@@ -1,0 +1,4 @@
+userName:root
+password:pass
+host:localhost:3306
+database:tnp

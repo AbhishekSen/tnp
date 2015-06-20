@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://pack_drop_program/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://pack_drop_program/" name="drop_programService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://pack_drop_program/" schemaLocation="http://automation:8080/dropProgramWS/drop_programService/__container$publishing$subctx/WEB-INF/wsdl/DropProgramService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="drop_down_programWS">
+    <part name="parameters" element="tns:drop_down_programWS"/>
+  </message>
+  <message name="drop_down_programWSResponse">
+    <part name="parameters" element="tns:drop_down_programWSResponse"/>
+  </message>
+  <portType name="drop_program">
+    <operation name="drop_down_programWS">
+      <input message="tns:drop_down_programWS"/>
+      <output message="tns:drop_down_programWSResponse"/>
+    </operation>
+  </portType>
+  <binding name="drop_programPortBinding" type="tns:drop_program">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="drop_down_programWS">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="drop_programService">
+    <port name="drop_programPort" binding="tns:drop_programPortBinding">
+      <soap:address location="http://automation:8080/dropProgramWS/drop_programService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>

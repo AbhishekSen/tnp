@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://pack_deptprog_roll/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://pack_deptprog_roll/" name="deptprog_rollService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://pack_deptprog_roll/" schemaLocation="http://automation:8080/deptprog_roll/deptprog_rollService/__container$publishing$subctx/WEB-INF/wsdl/DeptprogRollService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="getstring">
+    <part name="parameters" element="tns:getstring"/>
+  </message>
+  <message name="getstringResponse">
+    <part name="parameters" element="tns:getstringResponse"/>
+  </message>
+  <portType name="deptprog_roll">
+    <operation name="getstring">
+      <input message="tns:getstring"/>
+      <output message="tns:getstringResponse"/>
+    </operation>
+  </portType>
+  <binding name="deptprog_rollPortBinding" type="tns:deptprog_roll">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="getstring">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="deptprog_rollService">
+    <port name="deptprog_rollPort" binding="tns:deptprog_rollPortBinding">
+      <soap:address location="http://automation:8080/deptprog_roll/deptprog_rollService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>

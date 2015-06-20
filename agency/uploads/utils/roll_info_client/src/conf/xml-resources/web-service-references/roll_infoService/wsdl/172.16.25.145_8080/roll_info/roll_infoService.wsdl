@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://pack_roll_info/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://pack_roll_info/" name="roll_infoService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://pack_roll_info/" schemaLocation="http://automation:8080/roll_info/roll_infoService/__container$publishing$subctx/WEB-INF/wsdl/RollInfoService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="getinfo">
+    <part name="parameters" element="tns:getinfo"/>
+  </message>
+  <message name="getinfoResponse">
+    <part name="parameters" element="tns:getinfoResponse"/>
+  </message>
+  <portType name="roll_info">
+    <operation name="getinfo">
+      <input message="tns:getinfo"/>
+      <output message="tns:getinfoResponse"/>
+    </operation>
+  </portType>
+  <binding name="roll_infoPortBinding" type="tns:roll_info">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="getinfo">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="roll_infoService">
+    <port name="roll_infoPort" binding="tns:roll_infoPortBinding">
+      <soap:address location="http://automation:8080/roll_info/roll_infoService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>

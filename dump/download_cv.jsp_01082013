@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<%@page language="java" import="pack.DbBean"%> 
+
+
+<jsp:useBean id="db" class="pack.DbBean" scope="session" />
+
+
+<%@ include file="../utils/sql_convert_date.jsp"%>
+
+
+<%@ include file="../utils/session_validator.jsp"%>
+<%@ page import="java.util.*" %>
+<%@ page import = "java.io.File,java.io.*" %>
+<%@ page import="java.util.zip.*,java.util.zip.ZipOutputStream,java.util.zip.ZipException" %>
+<%@ page language="java" import="java.util.*,java.util.Properties" %>
+<%
+	String sid = null; 
+	sid = request.getSession(false).getId() ;
+	if (session_validate(sid,db).equals("true") ) 
+		response.sendRedirect("../../logout.jsp");	
+		
+      String strPropPath="/opt/IITG-PROJECT/SW-IIT/placement/placement.properties";
+      Properties ps=new Properties();
+      ps.load(new FileInputStream(strPropPath));
+      String gpath=ps.getProperty("gpath").trim();
+      String apath=ps.getProperty("apath").trim();         
+
+
+                db.fetchConfigDetails();
+
+		String username="";
+		String sql_username="select username from session where session_id = '"+sid+"';" ;
+		db.connect();
+		ResultSet rs= db.execSQL(sql_username);
+		if(rs.next()) 
+			username = rs.getString(1);
+		//out.println(username+"<br/>");
+		String agency_id="";
+		rs.close();
+		ResultSet re=db.execSQL("select agency_id from agency where username='"+username+"';");
+		if(re.next())
+			agency_id=re.getString(1);
+		//out.println(agency_id+"<br/>");
+		re.close();
+		db.close();
+
+
+
+	      db.connect();
+				String pth=gpath+"placement_uploads/student/uploads/"+agency_id ;
+			        File directory = new File(pth);
+				if(!directory.exists())
+                                {
+				   File f4=new File(pth);
+				   f4.mkdir( );
+				}
+
+				ResultSet rset=db.execSQL("select student_id,cv from interested_students where agency_id="+agency_id+";");
+				//out.println("select student_id from interested_students where agency_id="+agency_id+";");
+				while(rset.next())
+				{
+					//out.println("<br/>"+rset.getString(1));
+				    int cv=0;
+				    cv=rset.getInt(2);
+                                    String sql_temp="select status from eligible_students where student_id='"+rset.getString(1)+"' and agency_id="+agency_id+";";
+                                   int status=0;
+                                    
+                                     ResultSet rr=db.execSQL(sql_temp);
+					if(rr.next())
+					{
+                                            status=rr.getInt(1);
+					}                                     
+
+                                      rr.close();
+                                                                   
+				if(status!=1)
+				  {
+					ResultSet rset1=db.execSQL("select * from student_record where student_id='"+rset.getString(1)+"';");
+
+                                   
+					if(rset1.next())
+					{
+					 
+						String roll="";
+						String src1="";
+						String src2="";
+						String src=gpath+"placement_uploads/student/uploads/";
+						String des=gpath+"placement_uploads/student/uploads/new/";
+						
+						roll=rset1.getString("student_roll_number");
+						src1=gpath+"placement_uploads/student/uploads/"+roll+".pdf";
+						src2=gpath+"placement_uploads/student/uploads/"+roll+"_1.pdf";
+						des=gpath+"placement_uploads/student/uploads/"+agency_id+"/"+roll+".pdf";
+						File f1 = new File(src1);
+						File f2 = new File(src2);
+						File f3= new File(des);
+						
+						  if(cv==0)
+						    {
+						      if(f1.exists())
+							{
+
+							    InputStream in1 = new FileInputStream(f1);
+							    OutputStream ot1 = new FileOutputStream(f3);
+							    byte[] buf = new byte[1024];
+							    int len;
+							    while ((len = in1.read(buf)) > 0)
+							    {
+									ot1.write(buf, 0, len);
+							    }
+							    in1.close();
+							    ot1.close();
+
+							}
+						      }
+						      else
+						      {
+						      if(f2.exists())
+							{
+
+							    InputStream in2 = new FileInputStream(f2);
+							    OutputStream ot2 = new FileOutputStream(f3);
+							    byte[] buf = new byte[1024];
+							    int len;
+							    while ((len = in2.read(buf)) > 0)
+							    {
+									ot2.write(buf, 0, len);
+							    }
+							    in2.close();
+							    ot2.close();
+
+							}
+						      }
+
+							String s=null;
+							try
+							{
+							Process p = Runtime.getRuntime().exec(gpath+"placement/agency/cv_query/test1.sh "+agency_id+"");
+							BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+							while ((s = stdInput.readLine()) != null) 
+							{
+							System.out.println(s);
+							}
+
+							} 
+							catch (IOException e) 
+							{  
+							e.printStackTrace();  
+							System.out.println("ERROR.RUNNING.CMD");  
+							}
+							finally
+							{
+							//   p.destroy();
+							}
+
+	
+					      
+					}
+					rset1.close();
+				    }
+				}
+				rset.close();
+				db.close();
+
+
+
+
+
+
+	
+%>
+
+<%@ page language="java" import="java.sql.*"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.lang.*" %>
+
+<%@ include file="../utils/get_unique_field.jsp"%>
+<%@ include file="../utils/encode_sql.jsp"%>
+<%@ include file="../utils/table.jsp"%>
+<%@ include file="../utils/drop_down.jsp"%>
+<%@ include file="../utils/drop_down2.jsp"%>
+
+<head>
+<link rel="SHORTCUT ICON" href="../../images/iit_icon.ico">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Training &amp; Placement Cell, IIT Guwahati.</title>
+<link rel='stylesheet' href='../../stylesheet/style.css'>
+<link rel="stylesheet" href="../../stylesheet/styles.css" type="text/css" media="screen" /> 
+<script src='../../javascript/jquery.min.js'></script>
+<script type="text/javascript" src="../../javascript/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../javascript/jquery.sliding-menu.js"></script>
+<script type="text/javascript">
+		jQuery(function(){
+		  jQuery('#HorizontalSlidingMenu .SlidingMenu').slidingMenu();
+		  jQuery('#VerticalSlidingMenu .SlidingMenu').slidingMenu({ initialOpacity: 0.5 });
+		  
+		});
+		function showNewRecords()
+		{
+			$('#slideUp').show();
+			$('#slideUp').slideUp("slow");			
+		}
+	</script>
+	
+<script src="../js/sorttable.js"></script>
+<script src="../js/datetimepicker.js"></script>
+</head>
+
+
+<body onload = "showNewRecords();">
+<div id = "container">
+            <div id = "header">
+              <div>
+              <div id="globalLink" style = "float:left;width:40%;"> 
+                   <br/> <span id="spancompany"><u>Welcome <%=username%></u></span>
+                </div>
+                <div id = "menu">
+                    <div id="HorizontalSlidingMenu">
+                      <ul class="SlidingMenu Horizontal">
+                        <li><a href="../instructions.jsp" id="gl1" class="glink" onMouseOver="ehandler(event,menuitem1);">Home</a></li>
+                        <li><a href="http://www.iitg.ernet.in/">IITG Home</a></li>
+                        <li><a href="http://www.iitg.ernet.in/placement/">Placement Cell</a></li>
+                      </ul>
+                      <div class="ClearFix"></div>
+                    </div>
+                </div>
+              </div>
+              <div  id = "headerTop">
+                <div id ="title">
+                  <span id = "spanTitleFirst">
+                    Training & Placement Cell - 
+                  </span>
+                  <span id = "spanTitleSecond">
+                    IIT Guwahati
+                  </span>
+                </div>
+                <%--<div id = "search">
+                  <input type = "text" /><input type = "button" class = "button" value = "search"/>
+                </div> --%>
+              </div>
+              <hr style = "float:left;width:100%;">
+              </div>
+              <div id = "body">
+                <div id = "divMain">
+                 <div class = "mainMenu">
+					<div id="VerticalSlidingMenu">
+						<ul class="SlidingMenu">
+						  <li><a href='../instructions.jsp'>Instructions</a></li>
+						  <li><a href="../edit_details/edit.jsp">Edit Job Application Form</a></li>
+						  <li><a href="../vacancies/add_vacancy.jsp">Job Profile &amp; Salary Details</a></li>
+						  <li><a href="../student_eligibility/eligibility.jsp">Eligible Students</a></li>
+						  <li><a href="../student_details/student_details.jsp">Students Details Query</a></li>
+						  <li><a href="cv_query.jsp">CV Query</a></li>
+						  <li><a href="../calendar/view.jsp">Organization Schedule</a></li>
+						  <li><a href="../uploads/upload.jsp">Upload Organization Literature</a></li>
+						  <li><a href="../change_password/change_password.jsp">Change Password</a></li>
+						  <li><a href="../../logout.jsp">Logout</a></li>
+						 
+						</ul>
+					  </div>
+                 </div>
+                 <div class = "mainContainer" id="mainContainer">
+          					<div id = "slideUp" style = "display:none;color:white;">
+          						slide up<br/>
+          						slide up<br/>
+          						slide up<br/>
+          						slide up<br/>
+          						slide up<br/>
+          						slide up<br/>
+          						slide up<br/>
+          						slide up<br/>
+          						slide up<br/>
+          						slide up<br/>
+          						slide up<br/>
+          						slide up<br/>
+          					</div> 
+					 <div id = "center" class = "center">
+	<table border="0" align="center" style = "text-align:center" >
+          <tr>
+            <td>
+            
+             Click the link below
+           
+            </td>
+          </tr>
+	  <tr height="100">
+            
+<%
+	  out.println("<td><a href=\"process1.jsp?id="+agency_id+"\">Download CVs</a></td></tr>");
+					      
+
+
+%>
+	 
+        </table>
+                </div>
+              </div>
+              <div id = "footer">
+              <span>© 2009  Indian Institute of Technology Guwahati. Queries to: webmaster[at]iitg.ernet.in</span>
+            </div>
+            </div>
+        </div>
+</body>
+</html>

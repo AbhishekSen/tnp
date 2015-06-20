@@ -1,0 +1,90 @@
+/**
+ * @author GeekTantra
+ * @date 28 February 2010
+ */
+ 
+#Wrapper {
+  width: 900px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 18px;
+  margin: 5px 0px 10px;
+  border-bottom: 1px dotted #FFF;
+  padding: 0px 0px 3px;
+}
+
+ul.SlidingMenu {
+  list-style: none;
+  padding: 0em;
+}
+ul.SlidingMenu a {
+  padding: 0.52em 1.0em;
+  text-decoration: none;
+  color: #ffffff;
+  text-shadow: 0 0 2px #FFFFFF;
+  outline: none;
+}
+ul.SlidingMenu a:hover{
+  color: white;
+  text-shadow: 0 0 2px #1CBAF2;
+}
+ul.Horizontal li {
+  float: left;
+}
+.ClearFix {
+  clear: both;
+}
+#HorizontalSlidingMenu {
+ background: url('../images/capture.png') top left repeat-x;
+ border-radius:25px; 
+  
+}
+#HorizontalSlidingMenu li.Background {
+  background: url('../images/bg_menu.png') top right no-repeat;
+  color:white;
+}
+#HorizontalSlidingMenu li.Background div{
+  /*background: url('../images/bg_menu.png') top left no-repeat;*/
+  height: 100%;
+  margin-right: 31px;
+}
+#VerticalSlidingMenu {
+  float: left;
+}
+#VerticalSlidingMenu li.Background {
+ -moz-border-radius: 0.4em; 
+	-webkit-border-radius: 0.4em;
+  border-radius: 0.4em;
+  behaviour:url('border-radius.htc');
+  background: #ffffff;
+  box-shadow: 0 0 10px #000000;
+}
+#Description {
+  background: #0858C7;
+  background: rgba(80,80,80,0.5);
+  margin: 15px 0px 0px 165px;
+  padding: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+#Description pre {
+  background: #FFF;
+  background: rgba(255,255,255,0.8);
+  color: #008;
+  overflow: auto;
+  font-size: 14px;
+  border: 1px solid #FFF;
+  padding: 5px;
+}
+.ValidXHTML {
+  color: #FFF;
+  width: 880px;
+  margin: 10px auto 0px;
+  padding: 5px 10px;
+  font-size: 12px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  text-align: right;
+}

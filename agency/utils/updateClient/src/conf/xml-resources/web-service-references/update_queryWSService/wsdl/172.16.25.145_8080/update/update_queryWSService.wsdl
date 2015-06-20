@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://pack_update/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://pack_update/" name="update_queryWSService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://pack_update/" schemaLocation="http://automation:8080/update/update_queryWSService/__container$publishing$subctx/WEB-INF/wsdl/UpdateQueryWSService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="execute_dept">
+    <part name="parameters" element="tns:execute_dept"/>
+  </message>
+  <message name="execute_prog">
+    <part name="parameters" element="tns:execute_prog"/>
+  </message>
+  <message name="execute_roll">
+    <part name="parameters" element="tns:execute_roll"/>
+  </message>
+  <portType name="update_queryWS">
+    <operation name="execute_dept">
+      <input message="tns:execute_dept"/>
+    </operation>
+    <operation name="execute_prog">
+      <input message="tns:execute_prog"/>
+    </operation>
+    <operation name="execute_roll">
+      <input message="tns:execute_roll"/>
+    </operation>
+  </portType>
+  <binding name="update_queryWSPortBinding" type="tns:update_queryWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="execute_dept">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+    <operation name="execute_prog">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+    <operation name="execute_roll">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+  </binding>
+  <service name="update_queryWSService">
+    <port name="update_queryWSPort" binding="tns:update_queryWSPortBinding">
+      <soap:address location="http://automation:8080/update/update_queryWSService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>

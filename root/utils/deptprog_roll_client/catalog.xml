@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+<system systemId="http://172.16.25.145:8080/deptprog_roll/deptprog_rollService?WSDL" uri="src/conf/xml-resources/web-service-references/deptprog_rollService/wsdl/172.16.25.145_8080/deptprog_roll/deptprog_rollService.wsdl"/>
+<system systemId="http://automation:8080/deptprog_roll/deptprog_rollService/__container$publishing$subctx/WEB-INF/wsdl/DeptprogRollService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/deptprog_rollService/wsdl/automation_8080/deptprog_roll/deptprog_rollService/__container_publishing_subctx/WEB-INF/wsdl/DeptprogRollService_schema1.xsd"/>
+</catalog>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services/>
+  <clients>
+    <client name="update_queryWSService">
+      <wsdl-url>http://172.16.25.145:8080/update/update_queryWSService?WSDL</wsdl-url>
+      <local-wsdl-file>172.16.25.145_8080/update/update_queryWSService.wsdl</local-wsdl-file>
+      <package-name forceReplace="true">pack_update</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+    </client>
+  </clients>
+</jax-ws>

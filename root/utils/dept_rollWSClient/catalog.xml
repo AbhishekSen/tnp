@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+
+<system systemId="http://localhost.localdomain:8080/dept_rollWS/deptRollWSService/__container$publishing$subctx/WEB-INF/wsdl/DeptRollWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/deptRollWSService/wsdl/localhost.localdomain_8080/dept_rollWS/deptRollWSService/__container_publishing_subctx/WEB-INF/wsdl/DeptRollWSService_schema1.xsd"/>
+<system systemId="http://172.16.25.145:8080/dept_rollWS/deptRollWSService?WSDL" uri="src/conf/xml-resources/web-service-references/deptRollWSService/wsdl/172.16.25.145_8080/dept_rollWS/deptRollWSService.wsdl"/>
+<system systemId="http://automation:8080/dept_rollWS/deptRollWSService/__container$publishing$subctx/WEB-INF/wsdl/DeptRollWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/deptRollWSService/wsdl/automation_8080/dept_rollWS/deptRollWSService/__container_publishing_subctx/WEB-INF/wsdl/DeptRollWSService_schema1.xsd"/>
+</catalog>

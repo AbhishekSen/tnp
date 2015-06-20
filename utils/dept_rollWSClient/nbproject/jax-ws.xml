@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services/>
+  <clients>
+    <client name="deptRollWSService">
+      <wsdl-url>http://172.16.25.145:8080/dept_rollWS/deptRollWSService?WSDL</wsdl-url>
+      <local-wsdl-file>172.16.25.145_8080/dept_rollWS/deptRollWSService.wsdl</local-wsdl-file>
+      <package-name forceReplace="true">pack_dept_roll</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+    </client>
+  </clients>
+</jax-ws>

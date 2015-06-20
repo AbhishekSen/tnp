@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://pack_get_id/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://pack_get_id/" name="get_idWSService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://pack_get_id/" schemaLocation="http://automation:8080/id_by_name/get_idWSService/__container$publishing$subctx/WEB-INF/wsdl/GetIdWSService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="get_dept_idWS">
+    <part name="parameters" element="tns:get_dept_idWS"/>
+  </message>
+  <message name="get_dept_idWSResponse">
+    <part name="parameters" element="tns:get_dept_idWSResponse"/>
+  </message>
+  <message name="get_prog_idWS">
+    <part name="parameters" element="tns:get_prog_idWS"/>
+  </message>
+  <message name="get_prog_idWSResponse">
+    <part name="parameters" element="tns:get_prog_idWSResponse"/>
+  </message>
+  <portType name="get_idWS">
+    <operation name="get_dept_idWS">
+      <input message="tns:get_dept_idWS"/>
+      <output message="tns:get_dept_idWSResponse"/>
+    </operation>
+    <operation name="get_prog_idWS">
+      <input message="tns:get_prog_idWS"/>
+      <output message="tns:get_prog_idWSResponse"/>
+    </operation>
+  </portType>
+  <binding name="get_idWSPortBinding" type="tns:get_idWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="get_dept_idWS">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="get_prog_idWS">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="get_idWSService">
+    <port name="get_idWSPort" binding="tns:get_idWSPortBinding">
+      <soap:address location="http://automation:8080/id_by_name/get_idWSService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>

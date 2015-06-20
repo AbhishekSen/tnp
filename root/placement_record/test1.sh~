@@ -1,0 +1,5 @@
+#!/bin/bash
+
+/usr/bin/zip -9 -j -r /home/offices/placement/public_html/dheeraj_abhijeet/placement/status/AllOrganisations_Status.zip /home/offices/placement/public_html/dheeraj_abhijeet/placement/status/*
+
+exit 0;

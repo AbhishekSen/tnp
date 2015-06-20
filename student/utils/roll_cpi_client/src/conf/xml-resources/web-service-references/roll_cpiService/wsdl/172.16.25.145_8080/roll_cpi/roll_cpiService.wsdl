@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://pack_roll_cpi/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://pack_roll_cpi/" name="roll_cpiService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://pack_roll_cpi/" schemaLocation="http://automation:8080/roll_cpi/roll_cpiService/__container$publishing$subctx/WEB-INF/wsdl/RollCpiService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="get_cpi">
+    <part name="parameters" element="tns:get_cpi"/>
+  </message>
+  <message name="get_cpiResponse">
+    <part name="parameters" element="tns:get_cpiResponse"/>
+  </message>
+  <portType name="roll_cpi">
+    <operation name="get_cpi">
+      <input message="tns:get_cpi"/>
+      <output message="tns:get_cpiResponse"/>
+    </operation>
+  </portType>
+  <binding name="roll_cpiPortBinding" type="tns:roll_cpi">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="get_cpi">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="roll_cpiService">
+    <port name="roll_cpiPort" binding="tns:roll_cpiPortBinding">
+      <soap:address location="http://automation:8080/roll_cpi/roll_cpiService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>

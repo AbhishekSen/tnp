@@ -1,0 +1,90 @@
+<%@ page contentType="text/html; charset=iso-8859-1" language="java" import="java.sql.*" errorPage="" %>
+<!-- <%@ page import="net.sf.jpam.*" %> -->
+<%@page language="java" import="java.sql.*"%>
+<%@ page import="java.util.*" %>
+<%@page language="java" import="encrypt.SimpleCrypt"%>
+<%@page language="java" import="encrypt.StringEncrypter"%>
+<%@page language="java" import="pack.DbBean"%> 
+<jsp:useBean id="db" class="pack.DbBean" scope="session" />
+
+<%
+	db.fetchConfigDetails();
+	
+	String username = request.getParameter("username");	
+	String p = request.getParameter("password");
+     	
+        
+	Pam pam = new Pam();
+	/*if(!(pam.authenticateSuccessful(username,p)))
+	{
+		response.sendRedirect("index.jsp?error=username_password_mismatch");
+	}
+	else*/
+	{ 
+                
+		db.connect();
+	
+		ResultSet rs5=db.execSQL("select count(*) from student_record where username='"+username+"';");
+		if(rs5.next())
+		{
+	
+		}
+		if(rs5.getInt(1)==0) // student not exist
+		{
+			rs5.close();
+			db.close();
+			response.sendRedirect("index.jsp?error=no_user");
+		}
+		else // student exists
+		{
+			rs5.close();
+			db.close();
+
+			String sid = null; 
+			sid = request.getSession(true).getId() ;
+
+
+			StringEncrypter en = new StringEncrypter("DESede") ;
+			int restart=0;
+			String encrypted_password = "" ; 
+			if ( p != null && p!= "")
+				encrypted_password = en.encrypt(p);
+			//out.println("\n<br>Encrypted password in database is  ::'"+encrypted_password+"'::\n<br>");
+			int num_rows_login = 1 ;
+	
+			db.connect();
+			String check="delete from session where username='"+username+"' ";
+			int num_1=db.updateSQL(check);
+			db.close();
+	
+			String uid = "";
+			String psswd = "";
+			String role_id = "2"; // For Students
+
+			session.setAttribute("uid",username);		
+		
+			String sql_session = "select count(*) from session where username = '"+username+"' and session_id = '"+sid+"' " ;
+			db.connect();
+			ResultSet rs=db.execSQL(sql_session);
+			int num_session = 0 ; 
+			if (rs.next())
+				num_session=rs.getInt(1) ;
+			rs.close() ;	
+			if(num_session==0)
+			{	
+				sql_session = "insert into session (username , session_id ) values ( '"+username+"' , '"+sid+"' ) " ;
+				int num = db.updateSQL(sql_session);
+			}
+			else
+			{
+				response.sendRedirect("index.jsp?session_in_use=1");
+				return;
+		        }
+			db.close();	
+
+			response.sendRedirect("student/instructions/info.jsp");
+
+		} // end of else student exists
+	} // end of successful authentication 
+%>
+

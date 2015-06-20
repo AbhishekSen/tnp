@@ -1,0 +1,13 @@
+
+
+1. on load this yellow colour table should not be visible
+2. if clicked outside then control should go out .
+
+
+
+
+keynum         38  40 13
+
+
+google keycode 70 , 8  
+

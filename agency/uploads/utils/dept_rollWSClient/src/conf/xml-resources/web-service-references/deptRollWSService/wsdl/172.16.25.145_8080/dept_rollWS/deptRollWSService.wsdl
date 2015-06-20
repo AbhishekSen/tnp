@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://pack_dept_rolll/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://pack_dept_rolll/" name="deptRollWSService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://pack_dept_rolll/" schemaLocation="http://automation:8080/dept_rollWS/deptRollWSService/__container$publishing$subctx/WEB-INF/wsdl/DeptRollWSService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="getdept_roll">
+    <part name="parameters" element="tns:getdept_roll"/>
+  </message>
+  <message name="getdept_rollResponse">
+    <part name="parameters" element="tns:getdept_rollResponse"/>
+  </message>
+  <message name="getprog_roll">
+    <part name="parameters" element="tns:getprog_roll"/>
+  </message>
+  <message name="getprog_rollResponse">
+    <part name="parameters" element="tns:getprog_rollResponse"/>
+  </message>
+  <portType name="deptRollWS">
+    <operation name="getdept_roll">
+      <input message="tns:getdept_roll"/>
+      <output message="tns:getdept_rollResponse"/>
+    </operation>
+    <operation name="getprog_roll">
+      <input message="tns:getprog_roll"/>
+      <output message="tns:getprog_rollResponse"/>
+    </operation>
+  </portType>
+  <binding name="deptRollWSPortBinding" type="tns:deptRollWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="getdept_roll">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getprog_roll">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="deptRollWSService">
+    <port name="deptRollWSPort" binding="tns:deptRollWSPortBinding">
+      <soap:address location="http://automation:8080/dept_rollWS/deptRollWSService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>

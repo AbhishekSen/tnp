@@ -1,0 +1,604 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<%@page language="java" import="java.util.*,gcom.*" %>
+<jsp:useBean id="conbean" class="gcom.SessionManager" scope="session" />
+<jsp:setProperty name="conbean" property="userid" value="HARSHA" />
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd"><html>
+<head>
+<link rel="SHORTCUT ICON" href="../../images/iit_icon.ico">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>GCom-The IIT Guwahati Community. Enjoy!</title>
+<link rel='stylesheet' href='../../stylesheet/style.css'>
+<link rel="stylesheet" href="../../stylesheet/styles.css" type="text/css" media="screen" /> 
+<script src='../../javascript/jquery.min.js'></script>
+<script type="text/javascript" src="../../javascript/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../javascript/jquery.sliding-menu.js"></script>
+<script type="text/javascript">
+		jQuery(function(){
+		  jQuery('#HorizontalSlidingMenu .SlidingMenu').slidingMenu();
+		  jQuery('#VerticalSlidingMenu .SlidingMenu').slidingMenu({ initialOpacity: 0.5 });
+		  
+		});
+		function showNewRecords()
+		{
+			$('#slideUp').show();
+			$('#slideUp').slideUp("slow");			
+		}
+
+
+function resetCaptcha()
+{
+    document.getElementById('imgCaptcha').src = 'captchaimage.jsp?' + Math.random();
+  
+}
+
+
+	</script>
+
+<script src="../js/datetimepicker.js"></script>
+<script type="text/javascript">
+
+
+function alpha(e)
+    {
+	var k;
+	if(e.keyCode ==0)
+	{
+ 	   k = e.which;                        
+	}
+	else
+	{
+	   k = e.keyCode;                     
+	}
+	 if(k==34 || k==92)
+           alert("Please do not use single or double quotes or forward slash.");
+	 return ((k > 63 && k < 92) || (k > 96 && k < 127) || (k > 41 && k <64) || (k >39 && k<42) ||(k >34 && k<40) || k==10 ||  k==13 || k == 8 || k == 9 || k == 27 || k == 32 || k == 33 || k==95 || k==46 );
+    }
+function is_float(str)
+{
+	//alert("in float");
+	var check = true;
+	var value = str; //get characters
+	//check that all characters are digits, ., -, or ""
+	var j=0;
+	if(value.length==0)
+		return false;
+	for(var i=0;i < value.length; ++i)
+	{
+		var new_key = value.charAt(i); //cycle through characters
+		if(new_key==".")
+		{
+			j++;
+		}
+		else if(((new_key < "0") || (new_key > "9")) &&  !(new_key == ""))
+		{
+			return false;
+		}
+		if(j>1)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+function is_int(str)
+{
+	var check = true;
+	var value = str; //get characters
+	//check that all characters are digits, ., -, or ""
+	var j=0;
+	if(value.length==0)
+		return false;
+	for(var i=0;i < value.length; ++i)
+	{
+		var new_key = value.charAt(i); //cycle through characters
+		if(((new_key < "0") || (new_key > "9")) &&  !(new_key == ""))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+function alltrim(str)
+{
+	//var strr="";
+	return str.replace(/^\s+|\s+$/g, '');
+	//alert(strr);
+	//return strr;
+}
+
+function findall()
+{
+	
+	var i=0;
+	//alert("i="+i);
+	//alert(form2.elements.length);
+    for(i = 0; i < document.form2.elements.length; i++)
+    {
+		
+        document.form2.elements[i].value=alltrim(document.form2.elements[i].value);
+    }
+}
+
+
+function isvalid(str)
+{
+  
+  var i=0;
+  for(i=0;i<str.length;i++)
+  {
+    var k=str.charAt(i);
+   
+    if(k=='\\' || k=='\'' || k=='\"' || k=='`')
+    {
+      return false;
+    }
+    
+  }
+  return true;
+}
+
+function check_agency_phone_fax(test)
+{
+        var len=0;
+        var str="1234567890 -+";
+        for(i=0;i<test.length;i++)
+        {
+                for(j=0;j<str.length;j++)
+                {
+                        if(test.charAt(i)==str.charAt(j))
+                        len++;
+                }
+        }
+        
+        if(len==test.length)
+        return 1
+        else
+        return 0;
+}
+
+
+function validate_empty()
+{	
+	var message="";
+
+	findall();
+     
+	if(document.form2.company_name.value=="")
+		message+="Please enter Company name\n";
+	else{
+	     if(!isvalid(document.form2.company_name.value))
+	     {
+		    message+="Please remove slashes and quotes from \"Company name\" field\n";
+		    
+	      }
+	}
+
+       if(document.form2.company_address.value=="")
+                message+="Please enter Company address\n";
+         else{
+             if(!isvalid(document.form2.company_address.value))
+             {
+                    message+="Please remove slashes and quotes from \"Postal Address\" field\n";
+
+              }
+        }
+
+
+        if(document.form2.company_website.value=="")
+                message+="Please enter Company website\n";
+        else{
+             if(!isvalid(document.form2.company_website.value))
+             {
+                    message+="Please remove slashes and quotes from \"Website\" field\n";
+
+              }
+        }
+
+	if(document.form2.company_about.value=="")
+	  {
+		message+="Please enter Company Brief write up\n";				
+	  }	
+	else
+        {
+	     if(!isvalid(document.form2.company_about.value))
+	     {
+		    message+="Please remove slashes and quotes from \"Brief write up on the Organisation\" field\n";
+		    
+	      }
+	    var c_a=document.form2.company_about.value;
+	    
+	    if(c_a.length>480)
+	    {
+		     message+="Not more than 500 characters in\"Brief write up on the Organisation\" field\n";
+		     
+
+	    }
+	    
+	}	
+	
+	if(document.form2.category[6].checked==true)
+	  {
+		if(document.form2.category_other.value=="")
+		  {
+			message+="Please enter details of type of Organization in other field\n";
+
+
+		  }
+	      else{
+
+		      if(!isvalid(document.form2.category_other.value))
+			{
+			  
+			  message+="Please remove slashes and quotes from \"types of organization other\" field\n";
+		    
+			}
+		  }
+
+	  }
+
+
+
+	if(document.form2.sector[7].checked==true )
+	    {
+		if(document.form2.sector_other.value=="")
+		  {
+		    message+="Please enter details of type of Sector\n";
+		  }
+	      else{
+		    if(!isvalid(document.form2.sector_other.value))
+			{
+			  
+			  message+="Please remove slashes and quotes from \"industry sector other\" field\n";
+		    
+			}
+		  }
+		
+	    }
+
+	if(document.form2.fcp_name.value=="")
+		message+="Please enter FCP name\n";
+	else{
+	     if(!isvalid(document.form2.fcp_name.value))
+	     {
+		    message+="Please remove slashes and quotes from \"Name\" field\n";
+		    
+	      }
+	}
+	if(document.form2.fcp_designation.value=="")
+		message+="Please enter FCP designation\n";
+	else{
+	     if(!isvalid(document.form2.fcp_designation.value))
+	     {
+		    message+="Please remove slashes and quotes from \"Designation\" field\n";
+		    
+	      }
+	}
+	if(document.form2.fcp_email.value=="")
+		message+="Please enter FCP email\n";
+	else{
+	     if(!isvalid(document.form2.fcp_email.value))
+	     {
+		    message+="Please remove slashes and quotes from \"E-mail\" field\n";
+		    
+	      }
+	}
+	if(document.form2.fcp_mobile.value=="")
+		message+="Please enter FCP Phone number\n";
+	else{
+	     if(!check_agency_phone_fax(document.form2.fcp_mobile.value))
+	     {
+		    message+="Please enter valid mobile number\n";
+		    
+	      }
+	}
+
+        if(document.form2.fcp_phone.value!="")
+        {
+           if(!check_agency_phone_fax(document.form2.fcp_phone.value))
+             {
+                    message+="Please enter valid phone number\n";
+
+             }
+        }
+
+        if(document.form2.fcp_fax.value!="")
+        {
+           if(!check_agency_phone_fax(document.form2.fcp_fax.value))
+             {
+                    message+="Please enter valid fax number\n";
+
+             }
+        }
+
+	if(message=="")
+	{
+                var dd=document.getElementById('input_captcha').value;
+                //alert(dd); 
+                if(dd=="")
+                {
+                  alert("Please enter  Verification Code");
+                  document.form2.input_cap.focus();
+                  return false;
+                }
+
+                document.form2.action="process.jsp";
+                document.form2.submit();
+		return true;
+	}
+	else
+	{
+		alert(message);
+		document.form2.action=null;
+		return false;
+	}
+}	 
+
+function enabletxt()
+{
+  var radioval=document.getElementById("category_6").checked;
+  if(radioval==true)
+  {
+   document.getElementById("category_other").disabled=false; 
+  }
+  else
+  {  
+   document.getElementById("category_other").value=""; 
+   document.getElementById("category_other").disabled=true; 
+  } 
+}
+
+function enabletxt2()
+{
+  var radioval=document.getElementById("sector_7").checked;
+  if(radioval==true)
+  {
+   document.getElementById("sector_other").disabled=false;
+  }
+  else
+  {
+   document.getElementById("sector_other").value=""; 
+   document.getElementById("sector_other").disabled=true;
+  }
+}
+
+</script>
+
+</head>
+<body onload = "showNewRecords();">
+<%@page language="java" import="pack.DbBean"%>
+
+<jsp:useBean id="db" class="pack.DbBean" scope="page" />
+
+<%@ page language="java" import="java.sql.*"%>
+<%@ page import="java.util.*" %>
+
+
+
+<%@ include file="../utils/get_unique_field.jsp"%>
+<%@ include file="../utils/encode_sql.jsp"%>
+<%@ include file="../utils/table.jsp"%>
+<%@ include file="../utils/drop_down.jsp"%>
+<%@ include file="../utils/drop_down2.jsp"%>
+
+
+
+
+<div id = "container">
+            <div id = "header">
+              <div>
+                <div id = "menu">
+                    <div id="HorizontalSlidingMenu">
+                      <ul class="SlidingMenu Horizontal">
+						<li><a href="../instructions.jsp" id="gl1" class="glink" >Home</a></li>
+                        <li><a href="http://www.iitg.ernet.in/">IITG Home</a></li>
+                        <li><a href="http://www.iitg.ernet.in/placement/">Placement Cell</a></li>
+                      </ul>
+                      <div class="ClearFix"></div>
+                    </div>
+                </div>
+              </div>
+              <div  id = "headerTop">
+                <div id ="title">
+                  <span id = "spanTitleFirst">
+                    Training & Placement Cell - 
+                  </span>
+                  <span id = "spanTitleSecond">
+                    IIT Guwahati
+                  </span>
+                </div>
+               <%--<div id = "search">
+                  <input type = "text" /><input type = "button" class = "button" value = "search"/>
+                </div> --%>
+              </div>
+              <hr style = "float:left;width:100%;">
+              </div>
+              <div id = "body">
+                <div id = "divMain" style = "border:2px solid #1CBAF2;-moz-border-radius: 0.4em;-webkit-border-radius: 0.4em;border-radius: 0.4em;">
+                 <!--onSubmit="return validate_empty(form2)" -->
+<form method="post" name="form2" id="form2" onSubmit="return validate_empty();" action="">
+  <p align="center"> <strong> Please Fill All The Fields For Registration.</strong></p>
+	<p  align = "center" style = "color:red"><strong>(* Marked fields are mandatory)</strong></p>
+  <table width="600" border="0" align="center">
+    <tr>
+      <td width="179"><span style = "color:red">*</span>Name of the Company</td>
+      <td width="411"><label for="company_name"></label>
+        <input name="company_name" type="text" id="company_name" size="45" onkeypress="return alpha(event)"></td>
+    </tr>
+    <tr>
+      <td><span style = "color:red">*</span>Postal Address</td>
+      <td><label for="company_address"></label>
+        <textarea name="company_address" id="company_address" cols="51" rows="4" onkeypress="return alpha(event)"></textarea></td>
+    </tr>
+    <tr>
+      <td><span style = "color:red">*</span>Website</td>
+      <td><label for="company_about"></label>
+        <input name="company_website" type="text" id="company_website" size="45" onkeypress="return alpha(event)"></td>
+    </tr>
+    <tr>
+      <td><span style = "color:red">*</span>Brief  write up on the Organisation(50-70 words)</td>
+      <td><label for="company_about"></label>
+        <label for="company_about"></label>
+	<textarea name="company_about" id="company_about" rows="9" cols="51"  onkeypress="return alpha(event)" ></textarea>
+      </td>
+
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <table width="787" border="1" align="center">
+    <tr>
+      <td width="377"><strong><span style = "color:red">*</span>Type of Organization</strong></td>
+      <td width="394"><strong><span style = "color:red">*</span>Industry Sector</strong></td>
+    </tr>
+    <tr>
+      <td height="194"><table width="372" border="0">
+        <tr>
+          <td width="153"><input name="category" type="radio" id="category_2" value="Private" checked onClick="return enabletxt();">
+            <strong>Private</strong></td>
+          <td width="209"><input type="radio" name="category" value="MNC(Indian Origin)" id="category_5" onClick="return enabletxt();">
+            <strong>MNC(Indian Origin)</strong></td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="category" value="Govt." id="category_3" onClick="return enabletxt();">
+            <strong>Govt.</strong></td>
+          <td><input type="radio" name="category" value="MNC(Foreign origin)" id="category_0" onClick="return enabletxt();">
+            <strong>MNC(Foreign origin)</strong></td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="category" value="PSU" id="category_4" onClick="return enabletxt();">
+            <strong>PSU</strong></td>
+          <td><input type="radio" name="category" value="NGO" id="category_1" onClick="return enabletxt();">
+            <strong>NGO</strong></td>
+        </tr>
+        </table>
+        <p><strong>
+          <input type="radio" name="category" value="other" id="category_6" onClick="return enabletxt();" >
+          Other:</strong>
+          <input type="text" name="category_other" id="category_other" onkeypress="return alpha(event);" disabled>
+      </p></td>
+      <td><p><br>
+      </p>
+        <table width="350" border="0" align="center">
+          <tr>
+            <td width="136"><label>
+              <input name="sector" type="radio" id="sector_0" value="Core Engg." checked onClick="return enabletxt2();">
+              Core Engg.</label></td>
+            <td width="204"><label>
+              <input type="radio" name="sector" value="Analytics" id="sector_4" onClick="return enabletxt2();">
+              Analytics</label></td>
+          </tr>
+          <tr>
+            <td><label>
+              <input type="radio" name="sector" value="IT" id="sector_1" onClick="return enabletxt2();">
+              IT</label></td>
+            <td><label>
+              <input type="radio" name="sector" value="Management" id="sector_5" onClick="return enabletxt2();">
+              Management</label></td>
+          </tr>
+          <tr>
+            <td><label>
+              <input type="radio" name="sector" value="Finance" id="sector_2" onClick="return enabletxt2();">
+              Finance</label></td>
+            <td><label>
+              <input type="radio" name="sector" value="Education" id="sector_6" onClick="return enabletxt2();">
+              Education</label></td>
+          </tr>
+          <tr>
+            <td><label>
+              <input type="radio" name="sector" value="Consulting" id="sector_3" onClick="return enabletxt2();">
+              Consulting</label></td>
+            <td><p>&nbsp;</p></td>
+          </tr>
+        </table>
+        <p><strong>
+          <input type="radio" name="sector" value="other" id="sector_7" onClick="return enabletxt2();">
+          Other:</strong>
+          <label for="sector_other"></label>
+          <input type="text" name="sector_other" id="sector_other" onkeypress="return alpha(event);" disabled>
+  <br>
+        </p></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <table width="806" border="0" align="center">
+    <tr>
+      <td width="796"><table width="302" border="0" align="center">
+        <tr>
+          <td><strong>Contact Details:</strong></td>
+        </tr>
+      </table></td>
+    </tr>
+    <tr>
+      <td><table width="302" border=".5" align="center">
+        <tr>
+          <td width="72"><strong><span style = "color:red">*</span>Name:</strong></td>
+          <td width="220"><label for="fcp_name"></label>
+            <input type="text" name="fcp_name" id="fcp_name" onkeypress="return alpha(event)"></td>
+        </tr>
+        <tr>
+          <td><strong><span style = "color:red">*</span>Designation:</strong></td>
+          <td><label for="fcp_designation"></label>
+            <input type="text" name="fcp_designation" id="fcp_designation" onkeypress="return alpha(event)"></td>
+          </tr>
+        <tr>
+          <td><strong><span style = "color:red">*</span>E-mail:</strong></td>
+          <td><label for="fcp_email"></label>
+            <input type="text" name="fcp_email" id="fcp_email" onkeypress="return alpha(event)"></td>
+          </tr>
+        <tr>
+          <td><strong><span style = "color:red">*</span>Mobile:</strong></td>
+          <td><label for="fcp_mobile"></label>
+            <input type="text" name="fcp_mobile" id="fcp_mobile"></td>
+          </tr>
+        <tr>
+          <td><strong>Phone:</strong></td>
+          <td><label for="fcp_phone"></label>
+            <input type="text" name="fcp_phone" id="fcp_phone"></td>
+          </tr>
+        <tr>
+          <td><strong>Fax:</strong></td>
+          <td><label for="fcp_fax"></label>
+            <input type="text" name="fcp_fax" id="fcp_fax"></td>
+          </tr>
+      </table></td>
+    </tr>
+  </table>
+  <table width="46" height="32" border="0" align="center">
+
+  <!-- For Captcha Implementation-->
+    <tr>
+        <td align="center" width="28%">
+              <img src="captchaimage.jsp" id="imgCaptcha" style=""/>
+        </td>
+	<td>
+	  <img src="refresh.gif" border=0 height="20px" width="20px" id="imgRefresh" title="Refresh image" onclick="setTimeout('resetCaptcha()', 300); return false;">
+	</td>
+    </tr>
+    <tr><td><strong><span style = "color:red">*</span>Verification Code</strong></td> </tr>
+    <tr><td><input id="input_captcha" type="text" name="input_cap" value="" /></td> </tr> 
+
+    <tr>
+      <td width="40"><input type="submit" value="Register" name="submit"  id="submit"></td>
+    </tr>
+</table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</form>
+	
+
+
+<tr>
+  <td colspan="2" height="20">   
+  <div id="siteInfo"></div> </td></tr></table>
+</div> 
+ <div id = "footer" style = "margin-left:5%;width:100%;">
+              <span>© 2009  Indian Institute of Technology Guwahati. Queries to: placement[at]iitg.ernet.in</span>
+            </div>
+            </div>
+        </div>
+</body>
+</html>

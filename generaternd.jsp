@@ -1,0 +1,405 @@
+<%@ page language="java" import="java.io.*,java.sql.*,java.awt.*,java.awt.event.*"%>
+<%@ page language="java" import="java.util.*,javax.swing.*,javax.swing.table.*"%>
+<%@page language="java" import="pack.DbBean"%>
+<jsp:useBean id="db" class="pack.DbBean" scope="session" />
+
+<%@ include file="utils/session_validator.jsp"%>
+<%
+        String sid = null;
+        sid = request.getSession(false).getId();
+        if(session_validate(sid,db).equals("true") )
+        {
+           response.sendRedirect("prlogin.jsp");
+        } 
+   
+%>
+
+<%
+   String stat_msg="";
+   String submit=request.getParameter("submit");
+   String random_password="";
+   
+   int rollno=0;
+  if(submit!=null)
+  {
+    String rl=request.getParameter("rollno").trim();
+    if(!rl.equals(""))
+    {
+      //System.out.println("IF");
+      rollno=Integer.parseInt(rl);
+    }
+    /*
+    String rl=request.getParameter("rollno").trim().toString();
+    if(!rl.equals(""))
+    {
+      //System.out.println("IF");
+      rollno=rl;
+    }
+    */
+ // String random_password="";
+    int i=0;
+	for(i=0;i<6;i++)
+	{
+		int j=(int)(Math.random()*62);
+		if(j>=0&&j<=9)
+			random_password+=""+j;
+		else if(j>=10&&j<=35)
+		{
+			switch(j-9)
+			{
+				case 1:
+					random_password+="a";
+					break;
+				case 2:
+					random_password+="b";
+					break;
+				case 3:
+					random_password+="c";
+					break;
+				case 4:
+					random_password+="d";
+					break;
+				case 5:
+					random_password+="e";
+					break;
+				case 6:
+					random_password+="f";
+					break;
+				case 7:
+					random_password+="g";
+					break;
+				case 8:
+					random_password+="h";
+					break;
+				case 9:
+					random_password+="i";
+					break;
+				case 10:
+					random_password+="j";
+					break;
+				case 11:
+					random_password+="k";
+					break;
+				case 12:
+					random_password+="l";
+					break;
+				case 13:
+					random_password+="m";
+					break;
+				case 14:
+					random_password+="n";
+					break;
+				case 15:
+					random_password+="o";
+					break;
+				case 16:
+					random_password+="p";
+					break;
+				case 17:
+					random_password+="q";
+					break;
+				case 18:
+					random_password+="r";
+					break;
+				case 19:
+					random_password+="s";
+					break;
+				case 20:
+					random_password+="t";
+					break;
+				case 21:
+					random_password+="u";
+					break;
+				case 22:
+					random_password+="v";
+					break;
+				case 23:
+					random_password+="w";
+					break;
+				case 24:
+					random_password+="x";
+					break;
+				case 25:
+					random_password+="y";
+					break;
+				case 26:
+					random_password+="z";
+					break;
+			}
+		}
+		else if(j>=36&&j<=62)
+		{
+			switch(j-35)
+			{
+				case 1:
+					random_password+="A";
+					break;
+				case 2:
+					random_password+="B";
+					break;
+				case 3:
+					random_password+="C";
+					break;
+				case 4:
+					random_password+="D";
+					break;
+				case 5:
+					random_password+="E";
+					break;
+				case 6:
+					random_password+="F";
+					break;
+				case 7:
+					random_password+="G";
+					break;
+				case 8:
+					random_password+="H";
+					break;
+				case 9:
+					random_password+="I";
+					break;
+				case 10:
+					random_password+="J";
+					break;
+				case 11:
+					random_password+="K";
+					break;
+				case 12:
+					random_password+="L";
+					break;
+				case 13:
+					random_password+="M";
+					break;
+				case 14:
+					random_password+="N";
+					break;
+				case 15:
+					random_password+="O";
+					break;
+				case 16:
+					random_password+="P";
+					break;
+				case 17:
+					random_password+="Q";
+					break;
+				case 18:
+					random_password+="R";
+					break;
+				case 19:
+					random_password+="S";
+					break;
+				case 20:
+					random_password+="T";
+					break;
+				case 21:
+					random_password+="U";
+					break;
+				case 22:
+					random_password+="V";
+					break;
+				case 23:
+					random_password+="W";
+					break;
+				case 24:
+					random_password+="X";
+					break;
+				case 25:
+					random_password+="Y";
+					break;
+				case 26:
+					random_password+="Z";
+					break;
+			}
+		}
+	}
+
+	db.connect();
+	String del="DELETE FROM attendance where rollno="+rollno+" AND status=0";
+        int des=db.updateSQL(del);
+	String msg1="insert into attendance(rollno,code) values("+rollno+",'"+random_password+"');";
+	int res1=db.updateSQL(msg1);
+	db.close();
+	if(res1 != 0)
+              {   
+                    stat_msg="Record Seccessfully Added !!";
+
+                %>                 
+                    <script language = "JavaScript">
+                       //alert('Record Successfully Inserted!!');  
+                    </script>                    
+                    
+                <%
+                     
+                    // response.sendRedirect("index.jsp");                 
+              }
+                 
+              else
+              {                                
+                %>                 
+	           <script language = "JavaScript">
+	           alert('Error Inserting Data!!');  
+	           </script>                    
+	            
+                <%               
+              }
+}
+
+%>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd"><html>
+<head>
+<link rel="SHORTCUT ICON" href="images/iit_icon.ico">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Training &amp; Placement Cell, IIT Guwahati.</title>
+
+
+<link rel='stylesheet' href='stylesheet/style.css'>
+<link rel="stylesheet" href="stylesheet/styles.css" type="text/css" media="screen" /> 
+<script src='javascript/jquery.min.js'></script>
+<script type="text/javascript" src="javascript/jquery-ui.min.js"></script>
+<script type="text/javascript" src="javascript/jquery.sliding-menu.js"></script>
+<script type="text/javascript">
+
+    function validate()
+    {
+      
+      
+	    var x = document.getElementById("rollno").value;
+	   
+
+	    if(x=="")
+	    {
+	      alert("ENTER ROLL NUMBER");
+	      
+	      return false;
+	    }
+	    if(x==0)
+	    {
+              alert("PLEASE ENTER A VALID ROLL NUMBER");
+	      return false;
+
+	    }
+
+	    if (isNaN(parseInt(x)))
+	    {
+                alert("INVALID ROLL NUMBER");
+		return false;
+	    }
+
+          return true;
+    }
+
+ 
+</script>
+
+<style type="text/css">
+  .rw{
+	float:left;
+	height:30px;
+	width:100%;
+	margin-top:20px;
+	line-height:30px;
+    
+      }
+    .lb{
+	float:left;
+	height:28px;
+	width:35%;
+	line-height:25px;
+	text-align:right;
+
+
+	}
+   .inp{
+
+	float:left;
+	height:28px;
+	width:50%;
+	line-height:25px;
+	margin-left:5px;
+
+      }
+</style>
+</head>
+<body>
+
+ <div id = "divMain" >
+          <div id = "container">
+            <div id = "header">
+                <div id = "menu">
+                    <div id="HorizontalSlidingMenu">
+                        <ul class="SlidingMenu Horizontal">
+                        <li><a href="http://www.iitg.ernet.in/">IITG Home</a></li>
+                        <li><a href="http://www.iitg.ernet.in/placement/">Placement Cell</a></li>
+                        <li><a href="https://webmail.iitg.ernet.in/src/login.php">Webmail</a></li>
+                      </ul>
+                        <div class="ClearFix"></div>
+                    </div>
+                </div>
+              <div  id = "headerTop">
+                <div id ="title">
+                  <span id = "spanTitleFirst">
+                    Training & Placement Cell - 
+                  </span>
+                  <span id = "spanTitleSecond">
+                    IIT Guwahati
+                  </span>
+                </div>
+               <%-- <div id = "search">
+                  <input type = "text" /><input type = "button" class = "button" value = "search"/>
+                </div> --%>
+              </div>
+              <hr style = "float:left;width:100%;">
+              </div>
+              <div id = "body">
+                     <div id = "indexCenter" class = "indexCenter" style="background:none;border:none;">
+                       
+                        <div id = "login">
+			  <form action="generaternd.jsp" method="post" onsubmit="return validate();">
+                          <div class="rw">
+			      <div class="lb">
+				  Roll NO:
+			      </div>
+			      <div class="inp">
+				  <input type="text" name="rollno" id="rollno">
+			      </div>  
+			  </div>
+			  <div class="rw">
+			      <div class="lb">
+				 
+			      </div>
+			      <div class="inp">
+				  <input type="submit" name="submit" value="Generate">
+			      </div>
+			  </div>
+                          
+			  <div class="rw" style="height:120px;background:#D2EFFA;">
+			     <center><div style="font-size:16px;margin-top:5px;"><font color="blue"><%=stat_msg%> </font></div></center>
+			     <center><div style="font-size:16px;margin-top:5px;"><%=rollno%></div></center> 
+			     <center><div style="font-size:16px;margin-top:5px;font-weight:bold"><%=random_password%></div></center>
+			  </div>  
+                          <%
+                             stat_msg="";
+                          %>
+			  <div align="center" class="rw">
+			      <a href="index.jsp">Home Page</a>
+
+			  </div>
+			  </form>
+                        </div>
+                     </div>
+                  </div>
+                
+              </div>
+              <div id = "footer">
+                <span>© 2009  Indian Institute of Technology Guwahati. Queries to: webmaster[at]iitg.ernet.in</span>
+            </div>
+            </div>
+        </div>
+</body>
+</html>
+

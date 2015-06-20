@@ -1,0 +1,80 @@
+<%@ page contentType="text/html; charset=iso-8859-1" language="java" import="java.sql.*" errorPage="" %>
+<%@ page import="java.util.*,java.io.*" %>
+
+<%@page language="java" import="pack.DbBean"%>
+<jsp:useBean id="db" class="pack.DbBean" scope="session" />
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd"><html>
+<head>
+<link rel="SHORTCUT ICON" href="images/iit_icon.ico">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Training &amp; Placement Cell, IIT Guwahati.</title>
+
+
+<link rel='stylesheet' href='stylesheet/style.css'>
+<link rel="stylesheet" href="stylesheet/styles.css" type="text/css" media="screen" /> 
+<script src='javascript/jquery.min.js'></script>
+<script type="text/javascript" src="javascript/jquery-ui.min.js"></script>
+<script type="text/javascript" src="javascript/jquery.sliding-menu.js"></script>
+<style type="text/css">
+<!--
+.style12 {font-family: Georgia, "Times New Roman", Times, serif}
+.style13 {color: #006666;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+<body>
+
+ <div id = "divMain" >
+          <div id = "container">
+            <div id = "header">
+                <div id = "menu">
+                    <div id="HorizontalSlidingMenu">
+                        <ul class="SlidingMenu Horizontal">
+                        <li><a href="http://www.iitg.ernet.in">IITG Home</a></li>
+                        <li><a href="http://www.iitg.ernet.in/placement">Placement Cell</a></li>
+                        <li><a href="https://webmail.iitg.ernet.in/">Webmail</a></li>
+                      </ul>
+                        <div class="ClearFix"></div>
+                    </div>
+                </div>
+              <div  id = "headerTop">
+                <div id ="title">
+                  <span id = "spanTitleFirst">
+                    Training & Placement Cell - 
+                  </span>
+                  <span id = "spanTitleSecond">
+                    IIT Guwahati
+                  </span>
+                </div>
+               <%-- <div id = "search">
+                  <input type = "text" /><input type = "button" class = "button" value = "search"/>
+                </div> --%>
+              </div>
+              <div id = "body">
+                     <%--<div id = "indexCenter" class = "indexCenter">
+		     </div>--%>
+			<div id = "center" class = "center">
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+                                                  <p align="center"><font color=red size="40"><h1>The site is temporarily out of service !!!</h1></font></p>
+                                                  <p align="center"><font color=red size="40"><h1>Will be back soon!!!</h1></font></p>
+                                        </div>
+
+              </div>
+              <div id = "footer">
+                <span>© 2009  Indian Institute of Technology Guwahati. Queries to: placement[at]iitg.ernet.in</span>
+            </div>
+            </div>
+        </div>
+</body>
+</html>
+

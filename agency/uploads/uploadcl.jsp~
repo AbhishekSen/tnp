@@ -1,0 +1,379 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<%@ page language="java" import="javazoom.upload.*,java.util.*" %>
+<%@ page language="java" import="java.util.*,java.util.Properties" %>
+<%@ page errorPage="ExceptionHandler.jsp" %>
+
+<%@page language="java" import="pack.DbBean"%> 
+
+
+<jsp:useBean id="db" class="pack.DbBean" scope="session" />
+
+
+<%@ include file="../utils/sql_convert_date.jsp"%>
+
+
+<%@ include file="../utils/session_validator.jsp"%>
+
+<%
+	String sid = null; 
+	sid = request.getSession(false).getId() ;
+	if (session_validate(sid,db).equals("true") ) 
+		response.sendRedirect("../../logout.jsp");	
+	String age_name="";	
+	String agency_id="";	
+        String package_id="";
+	String type="";
+
+      //String strPropPath="/opt/IITG-PROJECT/SW-IIT/placement_new/placement.properties";
+	String strPropPath="/opt/tomcat7/webapps/placement/placement.properties";
+      Properties ps=new Properties();
+      ps.load(new FileInputStream(strPropPath));
+      String gpath=ps.getProperty("gpath").trim();
+      String apath=ps.getProperty("apath").trim();
+
+      String str_path=gpath+"placement_uploads/agency/company_literature/";        
+
+
+%>
+<% db.fetchConfigDetails(); %>
+<%
+		String username="";
+		String sql_username1="select username from session where session_id = '"+sid+"';" ;
+		db.connect();
+		ResultSet rs5= db.execSQL(sql_username1);
+		if(rs5.next()) 
+		{
+		username = rs5.getString(1);
+		}
+		
+		rs5.close();
+		db.close();
+	
+%>
+
+
+
+<jsp:useBean id="upBean" scope="page" class="javazoom.upload.UploadBean" >
+<jsp:setProperty name="upBean" property="folderstore" value='<%=str_path%>' />
+</jsp:useBean>
+
+<head>
+<link rel="shortcut icon" href="../../images/demo/favicon.ico" type="image/x-icon" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../../layout/styles/main.css" rel="stylesheet" type="text/css" media="all">
+<link href="../../layout/styles/mediaqueries.css" rel="stylesheet" type="text/css" media="all">
+ <link rel="stylesheet" href="../../css/style.css" media="screen" type="text/css" />
+<script src='../../javascript/jquery.min.js'></script>
+<script type="text/javascript" src="../../javascript/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../javascript/jquery.sliding-menu.js"></script>
+<script type="text/javascript">
+	jQuery(function(){
+		  jQuery('#HorizontalSlidingMenu .SlidingMenu').slidingMenu();
+		  jQuery('#VerticalSlidingMenu .SlidingMenu').slidingMenu({ initialOpacity:0.5 });
+	});
+	function showNewRecords()
+		{
+			$('#slideUp').show();
+			$('#slideUp').slideUp("slow");			
+		}
+ </script>
+<script src="../js/datetimepicker.js"></script>
+<script type="text/javascript">
+ function getstat()
+ {
+  if(document.getElementById("uploadfile").value.length==0)
+  {
+   alert("Please select a file to be uploaded !!");
+   return false;
+  }
+ }
+
+function confirm1()
+{
+ // alert("yes");
+   var where_to= confirm("Do you really want to delete the file??");
+
+    if (where_to)
+    {
+	return true;
+    }
+    else
+    {
+	return false;
+    }
+}
+
+</script>
+
+</head>
+<body onload = "showNewRecords();"> 
+<%@ page language="java" import="java.sql.*"%>
+<%@ page import="java.util.*,java.text.*" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.lang.*" %>
+<%@ page import="java.io.*" %>
+
+<%
+      int num_rows=0;
+      String package_name = null;
+      if(request != null)
+      {
+      	        agency_id= request.getParameter("agencyid");
+         	package_id=request.getParameter("id");
+      }
+      if (MultipartFormDataRequest.isMultipartFormData(request))
+      {
+         // Uses MultipartFormDataRequest to parse the HTTP request.
+         MultipartFormDataRequest mrequest = new MultipartFormDataRequest(request);
+         String todo = null;
+         if (mrequest != null) 
+         {
+         	todo = mrequest.getParameter("todo");
+         }
+	     if ( (todo != null) && (todo.equalsIgnoreCase("upload")) )
+	     {
+                Hashtable files = mrequest.getFiles();
+                if ( (files != null) && (!files.isEmpty()) )
+                {
+				UploadFile file = (UploadFile) files.get("uploadfile");
+				 
+				username="";
+				String sql_username="select username from session where session_id = '"+sid+"';" ;
+				db.connect();
+				ResultSet rs= db.execSQL(sql_username);
+				if(rs.next()) 
+				{
+					username = rs.getString(1);
+				}
+				rs.close();
+                              
+
+                                        ResultSet rs_pack=db.execSQL("select package_name from package_details where package_id="+Integer.parseInt(package_id)+";");
+                                        if(rs_pack.next())
+                                        package_name=rs_pack.getString("package_name");
+                                        rs_pack.close();                                       
+				
+				db.close();
+                                // Getting data value
+				long file_size=file.getFileSize();
+                                Date dt = new Date();
+                                Format ft;
+                                ft=new SimpleDateFormat("yyyyMMdd_HHmmss");
+                                String s = ft.format(dt);
+                                String fname=file.getFileName();
+                                int mid= fname.lastIndexOf(".");
+  		                String fn=fname.substring(0,mid);
+  		                String ext=fname.substring(mid+1,fname.length());                               
+
+				package_name=package_name.replaceAll(" ","_");
+				file.setFileName(package_name+"_"+agency_id+"_"+package_id+"_"+s+"."+ext);//file.getFileName());
+                                
+                                if (file != null)
+                                { 
+
+					if(file_size<=2048000)
+					  {
+
+					      upBean.store(mrequest, "uploadfile");					
+					      String main_record=" insert into company_literature values('"+agency_id+"','"+package_id+"','"+file.getFileName()+"') ;";
+						      
+					      db.connect();
+					      num_rows=db.updateSQL(main_record);
+					      db.close();
+					   }
+					      else{
+					      response.sendRedirect("error1.jsp");
+					      }
+    
+				  }     	
+					if(num_rows==1)
+					{
+						response.sendRedirect("success.jsp");
+					}
+					else
+					{
+						response.sendRedirect("error.jsp");
+				  }
+				    
+              }
+                else
+                {
+                  response.sendRedirect("error.jsp");
+                }
+	     }
+         else out.println("<BR> todo="+todo);
+      }
+%>
+</head>
+<body onload = "showNewRecords();">
+<div class="wrapper row1">
+  <header id="header" class="full_width clear">
+    <hgroup>
+      <h1><a>Welcome  <%=username%></a></h1>
+      <h2><a href="http://www.iitg.ernet.in/placement/" target="_blank">Training & Placement Portal</a>, <a href="http://www.iitg.ernet.in/" target="_blank">IIT Guwahati</a></h2>
+    </hgroup><a href="http://www.iitg.ernet.in/" target="_blank"><img src="../../images/salamanderskins_logo.gif" alt="IIT Guwahati" class="logo"></a>
+    
+  </header>
+</div>
+
+<!-- ################################################################################################ -->
+<div class="wrapper row2">
+  <nav id="topnav">
+    <ul class="clear">
+      <li><a href="http://iitg.ernet.in" target="_blank" title="IIT Guwahati">IIT Guwahati Home</a>
+       
+      </li>
+      <li><a href="http://iitg.ernet.in/placement" target="_blank" title="Training & Placement Cell">T&P Cell</a>
+        
+      </li>
+     
+      <li><a href="http://www.iitg.ernet.in/acad/courses_syllabee.php"  target="_blank" title="Courses Offered">Courses Offered & Syllabi</a></li>
+      <li class="last-child"><a href="../../logout.jsp" title="Logout">Logout</a></li>
+    </ul>
+  </nav>
+</div>
+<!-- content -->
+<div class="wrapper row3" style="width:100%;">
+
+<!-- ################################################################################################ -->
+<div id="container">
+  <div id="sidebar_1" class="sidebar one_quarter first" style="background:#DFDFDF;color:#000">
+  <aside>
+        <!-- ########################################################################################## -->
+        <h2 align="center">Recruiter</h2>
+        <nav>
+          <ul>
+            <li><a href="../instructions.jsp">Instructions</a></li>
+            <li align="center"> <span style="color:darkgrey; text-align:center;"> Add Job Profile</span>
+              <ul>
+                <li><a href="edit.jsp">Edit Job Application Form</a></li>
+                <li><a href="../vacancies/add_vacancy.jsp">Job Profile & Salary Details</a></li>
+              </ul>
+            </li>
+            <li><span style="color:darkgrey; text-align:center;">Students Details</span>
+            <ul>
+                <li><a href="../cv_query/cv_query.jsp">Eligible Students</a></li>
+                <li><a href="../student_details/student_details.jsp">Using Roll No.</a></li>
+            </ul>
+            </li><li><a href="../calendar/view.jsp">Update Organization Schedule</a>
+            </li><li><a href="../uploads/upload.jsp">Upload Organization Literature</a>
+            </li><li><a href="../change_password/change_password.jsp">Change Password</a>
+            </li><li><a href="../../logout.jsp">Logout</a>
+            </li>
+            
+           
+          
+          </ul>
+        </nav>
+        <!-- /nav --><!-- /section --><!-- /section -->
+        <!-- ########################################################################################## -->
+    </aside>
+</div>
+    <!-- ################################################################################################ -->
+    <div id="portfolio"  class="three_quarter">
+      <ul class="clear">
+
+<div id = "center" class = "center">
+                <div class="feature">
+                  <form method="post" action="uploadcl.jsp?id=<%=package_id%>&agencyid=<%=agency_id%>" name="upform" enctype="multipart/form-data">
+                    <table width="60%" border="0" cellspacing="5" cellpadding="5" align="center" class="style1">
+                      <tr>
+                        <td align="left"><b>Select a file to upload :</b></td>
+                      </tr>
+                      <tr>
+                        <td align="left">
+                          <input type="file" name="uploadfile" id="uploadfile" size="50" required="required">
+                          </td>
+                      </tr>
+                      <tr>
+                        <td align="left">
+                  		<input type="hidden" name="todo" value="upload">
+                          <input type="submit" name="Submit" value="Upload" onClick="return getstat();">
+                          <input type="reset" name="Reset" value="Cancel">
+                          </td>
+                      </tr>
+                    </table>
+                    
+                  
+                    <br>
+                    <br>
+                    <p>&nbsp;</p>
+                    <p align="center"><strong><font color="red"></font></strong></p>
+                    <p align="center">&nbsp;</p>
+		    <%
+			
+			  db.fetchConfigDetails(); //newly added
+			  db.connect();
+
+			  int co=1;
+			  ResultSet re=db.execSQL("select file_name from company_literature where agency_id="+agency_id+" and package_id="+package_id+";");
+			  out.println("<table width=400 align=\"center\" border=\"1\"><b><tr><td>S.No.</td><td>File</td><td>Delete</td></tr></b>");
+			  while(re.next())
+			  {
+
+			  out.println("<tr><td>"+co+"</td><td>"+re.getString("file_name")+"</td><td><a href=\"delete.jsp?id="+re.getString("file_name")+"&aid="+agency_id+"&pid="+package_id+"\" onClick=\"return confirm1();\">delete</a></td></tr>");
+			  co++;
+			  }
+			  out.println("</table>");
+			  re.close();
+			  db.close();
+		    %>
+                  </form>
+                  </div>
+                </div>
+      
+      
+      
+      
+</ul></div></div>
+<div class="clear"><!-- Footer -->
+</div>
+<!-- Footer -->
+<div class="wrapper row4" style="position:inherit; top: 92%; background:#000">
+  <div id="copyright" class="clear">
+  <p><center></center> </p>
+    <p class="fl_left"><center>
+        Copyright &copy; 2014 - All Rights Reserved - Placement Team, IIT Guwahati
+    </center></p>
+    
+  </div>
+</div>
+<!-- Scripts -->
+<script src="../../js/jquery-latest.min.js"></script>
+<script src="../../js/jquery-ui.min.js"></script>
+<script>window.jQuery || document.write('<script src="../layout/scripts/jquery-latest.min.js"><\/script>\
+<script src="../layout/scripts/jquery-ui.min.js"><\/script>')</script>
+<script>jQuery(document).ready(function($){ $('img').removeAttr('width height'); });</script>
+<script src="../../layout/scripts/jquery-mobilemenu.min.js"></script>
+<script src="../../layout/scripts/custom.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

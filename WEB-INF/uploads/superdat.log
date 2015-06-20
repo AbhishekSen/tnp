@@ -1,0 +1,21 @@
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Extracting Zip file from stub file, C:\Documents and Settings\cc\Desktop\5988xdat.exe.
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Performing self validation ...
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Retrieving file, NAISCRIP.NSC from zip file.
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Loading and parsing script file : C:\DOCUME~1\cc\LOCALS~1\Temp\7471\NAISCRIP.NSC
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Retrieving file, Globals.nsg from zip file.
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Loading and parsing globals file : Globals.nsg
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Searching for all Installed anti-virus products.
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Pre-notifying for 5988 update.
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Retrieving file, AVVSCAN.DAT from zip file.
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Retrieving file, AVVNAMES.DAT from zip file.
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Retrieving file, AVVCLEAN.DAT from zip file.
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Installing Anti-Virus files...
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Backing up file into C:\Program Files\Common Files\McAfee\Engine\OldDats\AVVSCAN.DAT
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Replacing file...C:\Program Files\Common Files\McAfee\Engine\AVVSCAN.DAT
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Backing up file into C:\Program Files\Common Files\McAfee\Engine\OldDats\AVVNAMES.DAT
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Replacing file...C:\Program Files\Common Files\McAfee\Engine\AVVNAMES.DAT
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Backing up file into C:\Program Files\Common Files\McAfee\Engine\OldDats\AVVCLEAN.DAT
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Replacing file...C:\Program Files\Common Files\McAfee\Engine\AVVCLEAN.DAT
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Deleting...C:\DOCUME~1\cc\LOCALS~1\Temp\NAIF.tmp
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Deleting...C:\DOCUME~1\cc\LOCALS~1\Temp\7471
+5/21/2010	11:55 AM		cc	IITG-29899EA2A8	Update process completed successfully.

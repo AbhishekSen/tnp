@@ -1,0 +1,146 @@
+
+
+
+****************************If some queries might be unnecessary,*************************************
+
+
+
+STAFF:
+
+	1)Course Curriculum.	
+
+		INPUT:department,programme,proposed semester,start date range ,end date range
+			course name(like), course number(like) (all fields are optional).
+
+		OUTPUT(possible options):
+			course_number,course_name,course_syllabus,lecture,tutorial,practical,credits,
+			start date,end date.
+			Number of electives.
+
+		
+	2)Course Offerings/teacher allotment:(Left join is cumpulsory here..)	
+
+		INPUT:Department,year,semester,course teacher.(all optional)
+		OUTPUT(possible options):
+			course_number,course_name,course_syllabus,lecture,tutorial,
+			practical,credit,course_teachers.
+
+	3)Registered courses in a year and semester.	
+
+		INPUT:Roll number , year,semester,course number.(all optional)
+		OUTPUT(possible options):
+			student name, roll number,course_number,course_name,lecture,tutorial
+			,practical,credit,course_teachers,course type.
+			(All students registered for a course and all the courses registered by a student)
+			
+	4)Grades:
+		INPUT: roll number,student name,year,semester,course number,course name.
+		OUTPUT:roll number,student name ,course number,course name ,credits,
+		lecture,tutorial,practical,taken as type ,grade.
+			i)Grades Per Semester,year
+			ii)Grades of all the semesters.
+			iii)Grades per Course number.
+		(Grade card preparation comes under reports, is to be handled separately)
+		
+	5)Student Details:
+		
+		INPUT:Roll Number,Name,department,programme,year of admission,year of departure.
+		(Easy for searching by department).
+		OUTPUT:
+			His own details.(department,programme,start date,end date,name ,roll number.)
+
+	6)Courses Backlog:(from the backlog table)
+		INTPUT:Roll Number,department,programme.
+		OUTPUT(possible options):
+			course_number,course_name,course_syllabus,lecture,tutorial
+			,practical,credit,course_teachers.
+	
+		OUTPUT:students with backlogs.
+			name,roll number,department,programme.
+
+
+	7)
+	Student Strength:
+	INPUT:year,department,programme
+	OUTPUT:	current strength,sanctioned strength,admitted strength.
+			(optional department,programme,year eg. all the admitted strengths of cse dept.
+			over the period of time)
+
+
+
+	8)Students with SPI,CPI between a certain range.
+	INPUT:range of spi,range of cpi, semester(1,2,3) ,year,department,programme.
+	OUTPUT:Student name, student roll number,deparment,programme,spi,cpi,(year, sem optional)
+
+
+	9)Faculty Record:
+		Handled by the other group so they might make the query.
+		INPUT:employee no.,faculty name ,department name.
+
+		OUTPUT:
+			name,emp no. , date of join,date of departure,department.
+
+	10)Course Record:(may not be required rigth now.)
+		INPUT:course number(like),course name(like ie.similar),start date range ,end date range.
+		OutPUT:course number,course name,course syllabus,l,t,p,credits,startdate,end date.
+
+	 
+	
+
+	
+
+Roles.
+
+STUDENTS :(We first do the quries required by the staff.)
+
+
+	1)Course Curriculum.	
+
+		INPUT:department,programme,proposed semester(the current curriculum).
+			course name(like), course number(like) (all fields are optional)
+
+		OUTPUT(possible options):
+			course_number,course_name,course_syllabus,lecture,tutorial,practical,credits,
+			start date,end date.
+			Number of electives.
+
+		
+	2)Course Offerings:	
+		
+			We can display all the courses registered.
+		INPUT:Department,year,semester,course teacher.(all optional)
+		OUTPUT(possible options):
+			course_number,course_name,course_syllabus,lecture,tutorial,
+			practical,credit,course_teachers.
+
+	3)Registered courses in a year and semester.	
+
+		INPUT:(Roll number should not be required because this should be taken
+			 from the student identification) , year,semester.(both optional)
+		OUTPUT(possible options):
+			course_number,course_name,course_syllabus,lecture,tutorial
+			,practical,credit,course_teachers,course type .
+		
+		Replacement table(old course no.,new course no.)(For information)		
+
+	4)Grades:
+		INPUT:(no special query required, a simple sql statement)
+		OUTPUT:course number,course name ,credits,lecture,tutorial,practical,grade.
+			SPI,CPI.
+		COMPLETE GRADE CARD(All semesters taken uptil now).
+
+	5)Student Details:
+		
+		INPUT:None.(No special sql query req. , a simple sql statement)
+		OUTPUT:
+			His own details.(department,programme,start date,end date,name ,roll number.)
+
+			(There is no need of a separate query,these should be displayed automatically when the 
+			student logs in,this is a part of the interface)
+
+	6)Courses Backlog:
+
+		OUTPUT(possible options):
+			course_number,course_name,course_syllabus,lecture,tutorial
+			,practical,credit,course_teachers.
+

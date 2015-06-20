@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://pack_roll_name/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://pack_roll_name/" name="roll_nameService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://pack_roll_name/" schemaLocation="http://automation:8080/roll_name/roll_nameService/__container$publishing$subctx/WEB-INF/wsdl/RollNameService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="get_name">
+    <part name="parameters" element="tns:get_name"/>
+  </message>
+  <message name="get_nameResponse">
+    <part name="parameters" element="tns:get_nameResponse"/>
+  </message>
+  <portType name="roll_name">
+    <operation name="get_name">
+      <input message="tns:get_name"/>
+      <output message="tns:get_nameResponse"/>
+    </operation>
+  </portType>
+  <binding name="roll_namePortBinding" type="tns:roll_name">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="get_name">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="roll_nameService">
+    <port name="roll_namePort" binding="tns:roll_namePortBinding">
+      <soap:address location="http://automation:8080/roll_name/roll_nameService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>

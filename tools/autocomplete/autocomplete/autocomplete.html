@@ -1,0 +1,143 @@
+<html><head>
+<style type="text/css">
+<!--
+.class1 {
+	position: absolute;		/*keep absolute position to prevent repositioning of other objects*/ 
+	visibility: visible;
+	top: 110px;
+	left: 10px;
+	background-color: #FFFFCC;
+	border: 1px solid #000000;
+	z-index: 2;
+}
+.class2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #550000;
+	background-color: #00CCFF;
+}
+.class3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+}
+-->
+</style>
+<script>
+	var item_selected=0;
+	var items=new Array;
+	items.push('cs01');
+	items.push('cs02');
+	items.push('cs05');
+	items.push('cs62');
+	items.push('ce01');
+	items.push('ce41');
+	items.push('ce53');
+	items.push('cr51');
+	items.push('cr46');
+	items.push('cr58');
+	
+function searchList(a)
+{	var count=0;
+	item_selected=0;
+	var data=document.getElementById('td1');
+	var str='<table id=\'table2\' width=\'100%\'>';
+	for(var i=0;i<items.length;i++)
+	{
+		if (items[i].indexOf(a.value)==0)
+		{	
+			count++;
+			str+='<tr><td id=\'res'+count+'\' class=\'class3\' onMouseOver=\'select_item('+count+')\' onClick=\'choose_item('+count+')\'>'+items[i]+'</td></tr>\n'; 
+		}
+	}
+	str+='</table>';
+	document.getElementById('ta').value=str;
+	if ((count==0) || (a.value==""))
+		document.getElementById('table1').style.visibility='hidden';
+	else
+	{
+		document.getElementById('table1').style.visibility='visible';
+		data.innerHTML=str;
+		select_item(1);
+	}
+}
+
+function select_item(count)
+{	
+	if (item_selected>0)
+	{
+		//unhighlight the previous selected item
+		document.getElementById("res"+item_selected).style.backgroundColor="";
+	}
+	// now highlight current selected item
+	document.getElementById('res'+count).style.backgroundColor="#FFCC88";
+	item_selected=count;
+	
+}
+
+function handleKey(box,e)
+{
+	var keynum
+	var keychar
+	var numcheck
+	
+	if(window.event) // IE
+	{
+		keynum = e.keyCode;
+	}
+	else if(e.which) // Netscape/Firefox/Opera
+	{
+		keynum = e.which;
+	}
+	if((keynum==38) ||(keynum==40) || (keynum==13))
+	{
+		if (document.getElementById('table1').style.visibility=='visible')
+		{
+			var item_to_select=item_selected;
+			if (keynum==38)	//go up
+			{	if (item_selected > 1)
+					item_to_select=item_selected-1;
+				select_item(item_to_select);
+			}
+			else if (keynum==40)	//go down
+			{	if (item_selected < document.getElementById('table2').rows.length)
+					item_to_select=item_selected+1;
+				select_item(item_to_select);
+			}
+			else if (keynum==13)	//replace text box with new selection
+			{
+				choose_item(item_selected);
+			}
+		}
+	}
+	else searchList(box);
+	
+	
+}
+
+function choose_item(num)
+{
+	if (document.getElementById('table1').style.visibility=='visible')
+	{
+		document.getElementById('t1').value=document.getElementById("res"+item_selected).innerHTML;
+		item_selected=0;
+		document.getElementById('td1').innerHTML="&nbsp;";
+		document.getElementById('table1').style.visibility='hidden';				
+	}
+}
+
+</script>
+</head>
+<body><p>&nbsp;</p>
+<p>Autocomplete Text Box</p>
+
+<input name="t1" type="text" id="t1" size="50" maxlength="200" onKeyUp="handleKey(this,event)" onClick="searchList(this)">
+<table width="320" border="0" class="class1" id="table1" name="table1">
+  <tr id="tr1">
+    <td id="td1">&nbsp;</td>
+  </tr>
+</table>
+
+<p>
+  <textarea name="ta" cols="100" rows="10" wrap="PHYSICAL" id="ta"></textarea>
+</p>
+</body>
+</html>
